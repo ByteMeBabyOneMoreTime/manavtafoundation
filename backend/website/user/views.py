@@ -61,3 +61,25 @@ def login(request):
             return JsonResponse({'message': f'An error occurred: {str(e)}'}, status=500)
     else:
         return JsonResponse({'message': 'GET method not allowed'}, status=405)
+    
+@csrf_exempt
+def logout(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            session_id = data.get("session_id")
+            
+            session = session_key.objects.filter(id=session_id).first()
+            if session:
+                session.delete()
+                return JsonResponse({'message': 'Deleted Session'}, status=400)
+            else:
+                return JsonResponse({'message': 'Session does not exist'}, status=404)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'message': 'Invalid JSON payload'}, status=400)
+
+        except Exception as e:
+            return JsonResponse({'message': f'An error occurred: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'message': 'GET method not allowed'}, status=405)
