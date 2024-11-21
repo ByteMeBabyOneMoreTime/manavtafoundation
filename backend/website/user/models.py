@@ -16,3 +16,10 @@ class User(models.Model):
 
     def __str__(self):
         return self.email
+
+class session_key(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    def __str__(self) -> str:
+        return f'{self.user.email} session key: {self.id}'
