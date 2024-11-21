@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Facebook, Twitter, Instagram, Linkedin, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Loader = () => (
   <div className="flex justify-center items-center h-screen">
@@ -78,18 +79,18 @@ const MainContent = () => (
 
     {/* Buttons on the left */}
     <div className="col-span-2 flex justify-start space-x-4">
-      <a
+      <Link
         href="/login"
         className="py-2 px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
       >
         LOGIN
-      </a>
-      <a
-        href="/register"
+      </Link>
+      <Link
+        to="/register"
         className="py-2 px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
       >
         REGISTER
-      </a>
+      </Link>
     </div>
   </section>
 );
