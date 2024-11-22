@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,12 +16,12 @@ const Navbar = () => {
       <div
         className={`flex flex-col md:flex-row md:space-x-8 ${menuOpen ? "block" : "hidden"} md:block`}
       >
-        <a
-          href="index.html"
+        <Link
+          to="/"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           HOME
-        </a>
+        </Link>
         <a
           href="about.html"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"

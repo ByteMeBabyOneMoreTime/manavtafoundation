@@ -1,13 +1,52 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({
+    name: "",
+    phone_number: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [message, setMessage] = useState(null);
+  const url = "http://127.0.0.1:8000/register";
 
-  // Simulating loader state
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 2000); // Simulate API call
+    setMessage(null);
+
+    if (data.password !== data.confirmPassword) {
+      setLoading(false);
+      setMessage({ type: "error", text: "Passwords do not match!" });
+      return;
+    }
+
+    try {
+      await axios.post(url, {
+        name: data.name,
+        phone_number: data.phone_number,
+        email: data.email,
+        password: data.password,
+      });
+      setLoading(false);
+      setMessage({ type: "success", text: "User registered successfully!" });
+    } catch (err) {
+      setLoading(false);
+      setMessage({
+        type: "error",
+        text:
+          err.response?.data?.message ||
+          "An error occurred during registration.",
+      });
+    }
   };
 
   return (
@@ -23,31 +62,61 @@ const Register = () => {
           </div>
         )}
 
+        {message && (
+          <div
+            className={`absolute top-4 right-4 p-4 rounded-md text-white ${
+              message.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
+            name="name"
             placeholder="Full Name"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            value={data.name}
+            required
           />
           <input
             type="text"
+            name="phone_number"
             placeholder="Username/Phone Number"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            value={data.phone_number}
+            required
           />
           <input
             type="email"
+            name="email"
             placeholder="Email"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            value={data.email}
+            required
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            value={data.password}
+            required
           />
           <input
             type="password"
+            name="confirmPassword"
             placeholder="Password Confirmation"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            value={data.confirmPassword}
+            required
           />
 
           <div className="bg-gray-50 p-4 rounded-md border border-gray-300">

@@ -91,14 +91,14 @@ const HomePage = () => {
               ))}
             </div>
 
-            <div className="relative rounded-lg overflow-hidden shadow-lg">
+            <div className="relative rounded-lg overflow-hidden shadow-lg ml-40 w-1/2">
               <img
-                src="/api/placeholder/600/400"
+                src="image.png"
                 alt="Service Showcase"
                 className="w-full h-full object-cover"
               />
               <a
-                href="#"
+                href="imggif.mp4"
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                            bg-white p-4 rounded-full shadow-lg hover:bg-green-50 transition"
               >
