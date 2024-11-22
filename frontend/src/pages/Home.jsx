@@ -1,5 +1,17 @@
-import React from "react";
-import { Play, Leaf, Droplet, Scissors } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  Play,
+  Leaf,
+  Droplet,
+  Scissors,
+  Users,
+  Paintbrush,
+  Trees,
+  Award,
+  ThumbsUp,
+  Sprout,
+  Recycle,
+} from "lucide-react";
 
 const ServiceCard = ({ icon: Icon, title, description }) => (
   <div className="flex items-center space-x-6 mb-8 hover:bg-gray-50 p-4 rounded-lg transition">
@@ -13,7 +25,41 @@ const ServiceCard = ({ icon: Icon, title, description }) => (
   </div>
 );
 
-const HomePage = () => {
+const BenefitCard = ({ icon: Icon, title, description }) => (
+  <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+    <div className="mb-4 inline-block bg-green-100 p-3 rounded-full">
+      <Icon className="w-8 h-8 text-green-600" />
+    </div>
+    <h3 className="text-xl font-bold text-gray-800 mb-3">{title}</h3>
+    <p className="text-gray-600 leading-relaxed">{description}</p>
+  </div>
+);
+
+const ProgressBar = ({ label, percentage }) => {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    // Animate progress bar on mount
+    setTimeout(() => setWidth(percentage), 100);
+  }, [percentage]);
+
+  return (
+    <div className="mb-8">
+      <div className="flex justify-between items-center mb-2">
+        <p className="text-lg font-medium text-gray-800">{label}</p>
+        <span className="text-lg font-semibold text-green-600">{width}%</span>
+      </div>
+      <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-1000 ease-out"
+          style={{ width: `${width}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default function HomePage() {
   const services = [
     {
       icon: Leaf,
@@ -32,6 +78,46 @@ const HomePage = () => {
       title: "Tree Service & Trimming",
       description:
         "Tree service and trimming involve pruning, shaping, and maintaining trees to enhance health, appearance, and safety, ensuring optimal growth.",
+    },
+    {
+      icon: Trees,
+      title: "Sustainable",
+      description:
+        "Our products are designed with sustainability in mind, using eco-friendly materials and practices to minimize environmental impact.",
+    },
+  ];
+
+  const progressData = [
+    { label: "Office Plants", percentage: 80 },
+    { label: "Field Management", percentage: 70 },
+    { label: "Landscape Design", percentage: 85 },
+    { label: "Garden Care", percentage: 65 },
+  ];
+
+  const benefits = [
+    {
+      icon: Award,
+      title: "Quality Products",
+      description:
+        "We ensure top-notch plants with robust health, vibrant growth, and resilience. Each plant is meticulously cared for, delivering excellence.",
+    },
+    {
+      icon: ThumbsUp,
+      title: "Perfect Service",
+      description:
+        "Experience unmatched service with our dedicated team, offering prompt, efficient, and friendly support to meet all your needs seamlessly.",
+    },
+    {
+      icon: Sprout,
+      title: "100% Natural",
+      description:
+        "Our products are crafted from pure, natural ingredients, ensuring authenticity and quality without additives or artificial components.",
+    },
+    {
+      icon: Recycle,
+      title: "Environmentally Friendly",
+      description:
+        "Our products are designed with sustainability in mind, using eco-friendly materials and practices to minimize environmental impact.",
     },
   ];
 
@@ -108,8 +194,49 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* About Us Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-green-50">
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">About Us</h2>
+            <p className="text-xl text-gray-600">
+              We are leading in the plants service fields
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Progress Bars Section */}
+            <div className="space-y-8 mt-20">
+              <div className="bg-white p-8 rounded-2xl shadow-lg">
+                {progressData.map((item, index) => (
+                  <ProgressBar
+                    key={index}
+                    label={item.label}
+                    percentage={item.percentage}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Benefits Grid */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              {benefits.map((benefit, index) => (
+                <BenefitCard
+                  key={index}
+                  icon={benefit.icon}
+                  title={benefit.title}
+                  description={benefit.description}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="mt-20 border-b border-gray-200" />
+        </div>
+      </section>
     </div>
   );
-};
-
-export default HomePage;
+}

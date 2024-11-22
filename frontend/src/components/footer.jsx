@@ -54,7 +54,7 @@ const Footer = () => {
         backgroundColor: "rgba(4, 43, 15, 0.8)",
       }}
     >
-      <div className="absolute inset-0 bg-green-900/70 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-green-900/70 "></div>
 
       <div className="container mx-auto px-4 space-y-12 relative z-10">
         {/* Top Section */}

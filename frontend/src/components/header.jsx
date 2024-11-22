@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Facebook, Twitter, Instagram, Linkedin, Loader2 } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
-
-// const Loader = () => (
-//   <div className="flex justify-center items-center h-screen">
-//     <Loader2 className="w-16 h-16 text-green-500 animate-spin" />
-//   </div>
-// );
 
 const SocialLinks = () => (
   <div className="flex space-x-4">
@@ -47,47 +41,58 @@ const SocialLinks = () => (
 
 const Header = () => (
   <header className="bg-yellow-400 p-3 flex flex-wrap justify-between items-center text-gray-800">
-    <SocialLinks />
-    <div className="text-center">
+    {/* Social Links */}
+    <div className="w-full sm:w-auto mb-2 sm:mb-0">
+      <SocialLinks />
+    </div>
+
+    {/* News Section */}
+    <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
       <div className="font-semibold">⚡ News & Updates</div>
       <div className="text-red-600">
         New products arriving soon! Stay tuned!
       </div>
     </div>
-    <div className="font-bold">Helpline: +91-9918771888</div>
+
+    {/* Helpline */}
+    <div className="font-bold w-full sm:w-auto text-center sm:text-right">
+      Helpline: +91-9918771888
+    </div>
   </header>
 );
 
 const MainContent = () => (
-  <section className="container mx-auto px-4 py-12 grid grid-cols-12 items-center">
+  <section className="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
     {/* Logo on the right */}
-    <div className="col-span-2 flex justify-end">
+    <div className="md:col-span-2 flex justify-center md:justify-end">
       <img
         src="logos.png"
         alt="Manavta Nursery Logo"
-        className="w-40 h-40 object-contain"
+        className="w-32 h-32 md:w-40 md:h-40 object-contain"
       />
     </div>
 
     {/* Heading in the center */}
-    <div className="col-span-8 text-center">
-      <h1 className="text-4xl font-bold text-green-800">MANAVTA NURSERY</h1>
-      <p className="text-xl text-red-600 mt-2 animate-pulse">
+    <div className="md:col-span-8 text-center">
+      <h1 className="text-3xl md:text-4xl font-bold text-green-800">
+        MANAVTA NURSERY
+      </h1>
+      <p className="text-lg md:text-xl text-red-600 mt-2 animate-pulse">
         मिशन घर घर हरियाली से गरीब के घर खुशहाली
       </p>
     </div>
 
     {/* Buttons on the left */}
-    <div className="col-span-2 flex justify-start space-x-4">
+    <div className="md:col-span-2 flex justify-center md:justify-start space-x-4">
       <Link
         to="/register"
-        className="py-2 px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+        className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
       >
         REGISTER
       </Link>
       <Link
         to="/login"
-        className="py-2 px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+        className="py-2 px-4 md:px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
       >
         LOGIN
       </Link>
@@ -104,15 +109,6 @@ const MainHeader = () => {
 
   return (
     <div className="font-sans text-gray-900">
-      {/*    {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Header />
-          <MainContent />
-        </>
-      )} */}
-
       <>
         <Header />
         <MainContent />
