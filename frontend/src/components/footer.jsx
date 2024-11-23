@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Facebook,
   Twitter,
@@ -7,6 +6,8 @@ import {
   Phone,
   Mail,
   Clock,
+  MessageCircleMore,
+  Mails,
 } from "lucide-react";
 
 const Footer = () => {
@@ -26,11 +27,16 @@ const Footer = () => {
       href: "https://www.instagram.com/teif_9918",
       color: "text-pink-500",
     },
-    // {
-    //   Icon: WhatsApp,
-    //   href: "https://chat.whatsapp.com/EDMT03GT1BI6JOIgV77bbS",
-    //   color: "text-green-600",
-    // },
+    {
+      Icon: MessageCircleMore,
+      href: "https://chat.whatsapp.com/EDMT03GT1BI6JOIgV77bbS",
+      color: "text-green-600",
+    },
+    {
+      Icon: Mails,
+      href: "#",
+      color: "text-orange-500",
+    },
   ];
 
   const quickLinks = [
@@ -54,7 +60,7 @@ const Footer = () => {
         backgroundColor: "rgba(4, 43, 15, 0.8)",
       }}
     >
-      <div className="absolute inset-0 bg-green-900/70 "></div>
+      <div className="absolute inset-0 bg-green-900/30 "></div>
 
       <div className="container mx-auto px-4 space-y-12 relative z-10">
         {/* Top Section */}
