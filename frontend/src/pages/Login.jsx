@@ -116,14 +116,14 @@ const Login = () => {
         <div className="mt-4 text-sm text-gray-600">
           <p>
             No account?{" "}
-            <a href="register.html" className="text-[#b71c1c] hover:underline">
+            <a href="/register" className="text-[#b71c1c] hover:underline">
               Register
             </a>
           </p>
           <p>
             Forgot Password?{" "}
             <a
-              href="forgetpassword.html"
+              href="/forgetpassword"
               className="text-[#b71c1c] hover:underline"
             >
               Reset Password
