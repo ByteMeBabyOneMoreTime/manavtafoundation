@@ -18,6 +18,7 @@ import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import CarouselSection from "../components/CarouselSection";
 
 const ServiceCard = ({ icon: Icon, title, description }) => (
   <div className="flex items-center space-x-6 mb-8 hover:bg-green-50 p-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
@@ -252,41 +253,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Carousel Section */}
-      <section className="relative h-screen overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{
-            backgroundImage: "url(/placeholder.svg?height=1080&width=1920)",
-          }}
-        >
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <div className="relative z-10 container mx-auto flex items-center justify-center h-full text-center text-white">
-          <div className="max-w-2xl">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-              Manavata Nursery
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 animate-fade-in-up animation-delay-300">
-              Cultivating green solutions and bringing nature closer to your
-              home
-            </p>
-            <div className="space-x-4 animate-fade-in-up animation-delay-600">
-              <a
-                href="/shop"
-                className="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
-              >
-                Get Started
-              </a>
-              <a
-                href="/contact"
-                className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-green-600 transition duration-300 ease-in-out transform hover:scale-105"
-              >
-                Contact Us
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CarouselSection />
 
       {/* Services Section */}
 
