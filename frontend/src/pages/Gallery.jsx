@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Home, ZoomIn, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);

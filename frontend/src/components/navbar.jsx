@@ -16,48 +16,48 @@ const Navbar = () => {
       <div
         className={`flex flex-col md:flex-row md:space-x-8 ${menuOpen ? "block" : "hidden"} md:block`}
       >
-        <Link
+        <a
           to="/"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           HOME
-        </Link>
-        <Link
+        </a>
+        <a
           href="/about"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           ABOUT
-        </Link>
-        <Link
+        </a>
+        <a
           href="/services"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           SERVICES
-        </Link>
-        <Link
+        </a>
+        <a
           href="/gallery"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           GALLERY
-        </Link>
-        <Link
+        </a>
+        <a
           href="/shop"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           SHOP
-        </Link>
-        <Link
+        </a>
+        <a
           href="/news"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           NEWS
-        </Link>
-        <Link
+        </a>
+        <a
           href="/contact"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           CONTACT US
-        </Link>
+        </a>
       </div>
 
       {/* Buttons */}
