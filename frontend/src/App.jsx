@@ -8,6 +8,9 @@ import Footer from "./components/footer";
 import AboutPage from "./pages/About";
 import Services from "./pages/Services";
 import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
+import NoPage from "./pages/Nopage";
+import Blog from "./pages/Blog";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/news" element={<Blog />} />
+          <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
       </div>
