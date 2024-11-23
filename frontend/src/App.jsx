@@ -1,11 +1,13 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-// import Login from "./pages/Login";
 import MainHeader from "./components/header";
 import Register from "./pages/Register";
 import Navbar from "./components/navbar";
 import HomePage from "./pages/Home";
 import Login from "./pages/Login";
 import Footer from "./components/footer";
+import AboutPage from "./pages/About";
+import Services from "./pages/Services";
+import Gallery from "./pages/Gallery";
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/gallery" element={<Gallery />} />
           {/* Simple route for Login */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
