@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Breadcrumb = ({ title }) => {
   return (
@@ -14,12 +14,12 @@ const Breadcrumb = ({ title }) => {
         <nav className="flex justify-center">
           <ol className="flex items-center space-x-2">
             <li>
-              <a
+              <Link
                 href="/"
                 className="text-green-300 hover:text-white transition-colors duration-200"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <span className="text-green-300 mx-2">/</span>

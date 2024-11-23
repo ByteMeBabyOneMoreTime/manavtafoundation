@@ -20,24 +20,12 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<Services />} />
           <Route path="/gallery" element={<Gallery />} />
-          {/* Simple route for Login */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
         <Footer />
       </div>
     </BrowserRouter>
-
-    // <Routes>
-    //     <Route path="/" element={<Home />}>
-    //       <Route index element={<AllTasks />} />
-    //       <Route path="/importantTasks" element={<ImportantTask />} />
-    //       <Route path="/completedTasks" element={<CompletedTask />} />
-    //       <Route path="/incompletedTasks" element={<IncompletedTask />} />
-    //     </Route>
-    //     <Route path="/signup" element={<Signup />} />
-    //     <Route path="/login" element={<Login />} />
-    //   </Routes>
   );
 }
 

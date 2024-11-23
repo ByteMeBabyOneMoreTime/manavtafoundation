@@ -22,42 +22,42 @@ const Navbar = () => {
         >
           HOME
         </Link>
-        <a
+        <Link
           href="/about"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           ABOUT
-        </a>
-        <a
+        </Link>
+        <Link
           href="/services"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           SERVICES
-        </a>
-        <a
+        </Link>
+        <Link
           href="/gallery"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           GALLERY
-        </a>
-        <a
+        </Link>
+        <Link
           href="/shop"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           SHOP
-        </a>
-        <a
+        </Link>
+        <Link
           href="/news"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           NEWS
-        </a>
-        <a
+        </Link>
+        <Link
           href="/contact"
           className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           CONTACT US
-        </a>
+        </Link>
       </div>
 
       {/* Buttons */}
