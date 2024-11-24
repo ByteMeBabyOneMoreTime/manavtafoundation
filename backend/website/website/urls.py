@@ -6,5 +6,7 @@ urlpatterns = [
     path('', include('user.urls')),
     path('news/', include('news.urls')),
     path('blogs/', include('blog.urls')),
-    path('products/', include('shop.urls'))
+    path('products/', include('shop.urls')),
+    path('cron', include('cron.urls'))
+
 ]
