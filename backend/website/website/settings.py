@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     # adds frontend server auth
     'corsheaders',
     # cors headers handler
+    'news',
+    # News handler
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
