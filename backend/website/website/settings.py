@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     # cors headers handler
     'news',
     # News handler
+    'blog',
+    # Blog handler
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
