@@ -27,10 +27,20 @@ const Login = () => {
     setIsLoading(true);
     try {
       const url = "http://127.0.0.1:8000/login";
-      const response = await axios.post(url, {
-        email: data.email,
-        password: data.password,
-      });
+      const apiKey = import.meta.env.VITE_API_KEY;
+      const response = await axios.post(
+        url,
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            key: apiKey, // Add the API key as a custom header
+          },
+        },
+      );
 
       // Fix: Access the message field from response.data
       const session_id = response.data.message;

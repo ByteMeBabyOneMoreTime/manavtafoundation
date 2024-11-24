@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 export default function CarouselSection() {
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -76,18 +77,18 @@ export default function CarouselSection() {
             Cultivating green solutions and bringing nature closer to your home
           </p>
           <div className="space-x-4 animate-fade-in-up animation-delay-600">
-            <a
-              href="/shop"
+            <Link
+              to="/shop"
               className="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Get Started
-            </a>
-            <a
+            </Link>
+            <Link
               href="/contact"
               className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Contact Us
-            </a>
+            </Link>
           </div>
         </div>
       </div>

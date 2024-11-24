@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-green-700 p-4 flex justify-between items-center w-full">
-      <div className="text-white font-bold text-2xl">LOGO</div>
+      <div className="text-white font-bold text-2xl"></div>
 
       {/* Navigation Links */}
       <div

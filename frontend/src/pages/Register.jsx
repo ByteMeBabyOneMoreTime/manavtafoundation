@@ -12,6 +12,7 @@ const Register = () => {
   });
   const [message, setMessage] = useState(null);
   const url = "http://127.0.0.1:8000/register";
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,12 +31,21 @@ const Register = () => {
     }
 
     try {
-      await axios.post(url, {
-        name: data.name,
-        phone_number: data.phone_number,
-        email: data.email,
-        password: data.password,
-      });
+      await axios.post(
+        url,
+        {
+          name: data.name,
+          phone_number: data.phone_number,
+          email: data.email,
+          password: data.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            key: apiKey, // Add the API key as a custom header
+          },
+        },
+      );
       setLoading(false);
       setMessage({ type: "success", text: "User registered successfully!" });
     } catch (err) {
