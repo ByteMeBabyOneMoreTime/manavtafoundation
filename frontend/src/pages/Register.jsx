@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Add this import
 
 const Register = () => {
+  const navigate = useNavigate(); // Add navigation hook
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -42,12 +44,17 @@ const Register = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            key: apiKey, // Add the API key as a custom header
+            key: apiKey,
           },
         },
       );
       setLoading(false);
       setMessage({ type: "success", text: "User registered successfully!" });
+
+      // Add a small delay before redirecting to show the success message
+      setTimeout(() => {
+        navigate("/login"); // Redirect to login page
+      }, 1500);
     } catch (err) {
       setLoading(false);
       setMessage({

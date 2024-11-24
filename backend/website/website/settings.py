@@ -26,23 +26,14 @@ INSTALLED_APPS = [
     # cors headers handler
     "news",
     # News handler
-<<<<<<< HEAD
+    "blog",
+    # Blog handler
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-=======
-    'blog',
-    # Blog handler
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
->>>>>>> e337f54119e6f382fe84b3c44a8c5df257652759
 ]
 
 MIDDLEWARE = [

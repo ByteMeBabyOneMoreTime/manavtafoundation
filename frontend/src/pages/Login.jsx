@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
@@ -47,6 +49,10 @@ const Login = () => {
       localStorage.setItem("session_id", session_id);
       alert("Login successful!");
       // Redirect or perform further actions after successful login
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (err) {
       alert(
         "Login Error: " +

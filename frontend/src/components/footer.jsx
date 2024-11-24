@@ -181,7 +181,7 @@ const Footer = () => {
 
           <nav className="mt-4 md:mt-0">
             <ul className="flex space-x-4">
-              {["Home", "About", "Service", "Portfolio", "Blog", "Contact"].map(
+              {["Home", "About", "Service", "Portfolio", "News", "Contact"].map(
                 (item, index) => (
                   <li key={index}>
                     <a

@@ -2,57 +2,43 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Home, ChevronLeft, ChevronRight } from "lucide-react";
+import axios from "axios";
 
-// Sample blog posts data
-// Sample blog posts data with Lorem Ipsum
-const SAMPLE_POSTS = [
-  {
-    _id: "1",
-    blogname: "Lorem ipsum dolor sit amet",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    image: "blog1.jpg",
-  },
-  {
-    _id: "2",
-    blogname: "Consectetur adipiscing elit",
-    description:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    image: "blog2.jpg",
-  },
-  {
-    _id: "3",
-    blogname: "Sed do eiusmod tempor",
-    description:
-      "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse.",
-    image: "blog3.jpg",
-  },
-  {
-    _id: "4",
-    blogname: "Ut enim ad minim veniam",
-    description:
-      "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt neque porro quisquam est.",
-    image: "blog4.jpg",
-  },
-  {
-    _id: "5",
-    blogname: "Duis aute irure dolor",
-    description:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.",
-    image: "blog5.jpg",
-  },
-  {
-    _id: "6",
-    blogname: "Excepteur sint occaecat",
-    description:
-      "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus.",
-    image: "blog6.jpg",
-  },
-];
-
-export default function Blog() {
+export default function News() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const itemsPerPage = 4;
+
+  // Fetch blog posts from API
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "http://127.0.0.1:8000/news/download",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              key: import.meta.env.VITE_API_KEY,
+            },
+          },
+        );
+        console.log(response);
+        // Extract data array from the response
+        const postsData = response.data.data || [];
+        setPosts(postsData);
+      } catch (err) {
+        setError("Failed to fetch blog posts");
+        console.error("Error fetching posts:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   // Parallax effect
   useEffect(() => {
@@ -67,8 +53,8 @@ export default function Blog() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const pageCount = Math.ceil(SAMPLE_POSTS.length / itemsPerPage);
-  const slicedPosts = SAMPLE_POSTS.slice(
+  const pageCount = Math.ceil(posts.length / itemsPerPage);
+  const slicedPosts = posts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -95,6 +81,22 @@ export default function Blog() {
     },
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500">
+        {error}
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section with Parallax */}
@@ -115,7 +117,7 @@ export default function Blog() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-bold mb-4"
           >
-            Latest News
+            समाचार
           </motion.h1>
 
           <motion.nav
@@ -129,10 +131,10 @@ export default function Blog() {
               className="hover:text-green-400 transition-colors flex items-center"
             >
               <Home className="w-4 h-4 mr-1" />
-              Home
+              होम
             </Link>
             <span>/</span>
-            <span className="text-green-400">Blog</span>
+            <span className="text-green-400">ब्लॉग</span>
           </motion.nav>
         </div>
       </div>
@@ -148,16 +150,19 @@ export default function Blog() {
           >
             {slicedPosts.map((post) => (
               <motion.article
-                key={post._id}
+                key={post.id}
                 variants={itemVariants}
                 className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 {/* Image Container */}
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={`/api/placeholder/600/400`}
-                    alt={post.blogname}
+                    src={post.media_url}
+                    alt={post.title}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                      e.target.src = "/api/placeholder/600/400";
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
@@ -165,14 +170,14 @@ export default function Blog() {
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-4 text-gray-800 group-hover:text-green-600 transition-colors duration-300">
-                    {post.blogname}
+                    {post.title}
                   </h3>
                   <p className="text-gray-600 line-clamp-3">
                     {post.description}
                   </p>
 
                   <button className="mt-4 inline-flex items-center text-green-600 hover:text-green-700 transition-colors duration-300">
-                    Read More
+                    और पढ़ें
                     <ChevronRight className="w-4 h-4 ml-1" />
                   </button>
                 </div>
