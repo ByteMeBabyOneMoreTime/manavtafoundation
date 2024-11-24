@@ -11,6 +11,7 @@ import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import NoPage from "./pages/Nopage";
 import News from "./pages/News";
+import Shop from "./pages/Shop";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/news" element={<News />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
