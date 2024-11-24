@@ -20,6 +20,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'user',
+    'api',
+    # adds frontend server auth
     'corsheaders',
     # cors headers handler
     'django.contrib.admin',

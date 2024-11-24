@@ -4,7 +4,10 @@ from django.http import JsonResponse
 from .models import User
 from .models import session_key
 from django.views.decorators.csrf import csrf_exempt
+from api.views import validate_api_key
 
+
+@validate_api_key
 @csrf_exempt
 def register(request):
     if request.method == "POST":
@@ -31,6 +34,7 @@ def register(request):
         return JsonResponse({'message': 'GET method not allowed'}, status=405)
 
 
+@validate_api_key
 @csrf_exempt
 def login(request):
     if request.method == "POST":
@@ -62,6 +66,7 @@ def login(request):
     else:
         return JsonResponse({'message': 'GET method not allowed'}, status=405)
     
+@validate_api_key
 @csrf_exempt
 def logout(request):
     if request.method == "POST":
