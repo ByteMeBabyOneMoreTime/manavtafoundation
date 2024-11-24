@@ -28,8 +28,6 @@ INSTALLED_APPS = [
     # News handler
     "blog",
     # Blog handler
-    "blog",
-    # Blog handler
     "shop",
     # Handles Products, Categories and Orders
     "django.contrib.admin",
