@@ -28,6 +28,10 @@ INSTALLED_APPS = [
     # News handler
     "blog",
     # Blog handler
+    "blog",
+    # Blog handler
+    "shop",
+    # Handles Products, Categories and Orders
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -145,6 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# Cors Headers
 from corsheaders.defaults import default_headers
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
