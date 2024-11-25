@@ -1,4 +1,4 @@
-import { Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import MainHeader from "./components/header";
 import Register from "./pages/Register";
 import Navbar from "./components/navbar";
@@ -15,7 +15,7 @@ import Shop from "./pages/Shop";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <div className="h-screen p-2 relative">
         <MainHeader />
         <Navbar />
@@ -33,7 +33,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

@@ -46,11 +46,16 @@ const Header = () => (
       <SocialLinks />
     </div>
 
-    {/* News Section */}
-    <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
+    {/* News Section with Slider */}
+    <div className="text-center w-full sm:w-auto mb-2 sm:mb-0 overflow-hidden">
       <div className="font-semibold">⚡ News & Updates</div>
-      <div className="text-red-600">
-        New products arriving soon! Stay tuned!
+      <div className="relative overflow-hidden h-6 w-80 sm:w-[40rem] mx-auto">
+        <div className="absolute w-full h-full flex items-center whitespace-nowrap animate-slide">
+          <span className="text-red-600 font-medium">
+            Latest Updates: New products arriving soon! Stay tuned! | Exciting
+            news coming up!
+          </span>
+        </div>
       </div>
     </div>
 

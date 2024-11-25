@@ -8,12 +8,7 @@ export default function CarouselSection() {
   const [zoomLevel, setZoomLevel] = useState(1);
 
   // Array of image paths - replace with your actual image paths
-  const images = [
-    "bg-img/1.jpg",
-    "bg-img/2.jpg",
-    "bg-img/3.jpg",
-    "bg-img/16.jpg",
-  ];
+  const images = ["crsl-img/crsl-0.jpg", "crsl-img/crsl-1.jpg"];
 
   // Continuous zoom effect
   useEffect(() => {
