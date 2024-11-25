@@ -76,10 +76,10 @@ export default function CarouselSection() {
               to="/shop"
               className="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
-              Get Started
+              Shop With Us
             </Link>
             <Link
-              href="/contact"
+              to="/contact"
               className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Contact Us

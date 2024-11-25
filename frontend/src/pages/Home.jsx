@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Play,
   Leaf,
@@ -19,6 +19,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import CarouselSection from "../components/CarouselSection";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ icon: Icon, title, description }) => (
   <div className="flex items-center space-x-6 mb-8 hover:bg-green-50 p-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
@@ -473,12 +474,12 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <a
-              href="/shop"
+            <Link
+              to="/shop"
               className="inline-block px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300 transform hover:scale-105"
             >
               View All
-            </a>
+            </Link>
           </div>
         </div>
       </section>
