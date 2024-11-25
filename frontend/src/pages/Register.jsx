@@ -13,7 +13,7 @@ const Register = () => {
     confirmPassword: "",
   });
   const [message, setMessage] = useState(null);
-  const url = "http://127.0.0.1:8000/register";
+  const url = "https://manavtafoundation-sq6h.onrender.com/register";
   const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleChange = (e) => {

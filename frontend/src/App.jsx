@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import MainHeader from "./components/header";
 import Register from "./pages/Register";
 import Navbar from "./components/navbar";
@@ -15,12 +15,12 @@ import Shop from "./pages/Shop";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="h-screen p-2 relative">
         <MainHeader />
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route exact path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<Services />} />
           <Route path="/gallery" element={<Gallery />} />
@@ -33,7 +33,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -17,7 +17,7 @@ export default function News() {
       try {
         setLoading(true);
         const response = await axios.get(
-          "http://127.0.0.1:8000/news/download",
+          "https://manavtafoundation-sq6h.onrender.com/news/download",
           {
             headers: {
               "Content-Type": "application/json",

@@ -28,7 +28,7 @@ const Login = () => {
     }
     setIsLoading(true);
     try {
-      const url = "http://127.0.0.1:8000/login";
+      const url = "https://manavtafoundation-sq6h.onrender.com/login";
       const apiKey = import.meta.env.VITE_API_KEY;
       const response = await axios.post(
         url,
