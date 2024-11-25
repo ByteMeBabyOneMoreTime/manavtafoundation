@@ -164,11 +164,6 @@ const Shop = () => {
                     to={`/shop/${category._id}`}
                     className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-50 transition-all group"
                   >
-                    <img
-                      src="/api/placeholder/48/48"
-                      alt={category.categoryname}
-                      className="w-12 h-12 rounded-full object-cover group-hover:scale-110 transition-transform"
-                    />
                     <span className="text-gray-700 group-hover:text-green-600">
                       {category.categoryname}
                     </span>
