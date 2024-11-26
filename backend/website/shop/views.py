@@ -44,10 +44,14 @@ def get_categories_products(request, id):
                     "id": product.id,
                     "name": product.name,
                     "price": product.price,
-                    # Add other product fields as needed
+                    'description': product.description,
+                    'image': product.image,
+                    'quantity': product.quantity,
+                    'categories': [category.name for category in product.catergory.all()]
                 }
                 for product in products
             ]
             return JsonResponse({'data': serialized_products}, safe=False)
         except catergory.DoesNotExist:
             return JsonResponse({'message': 'No Products found '}, status=405)
+        
