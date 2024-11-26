@@ -8,12 +8,7 @@ export default function CarouselSection() {
   const [zoomLevel, setZoomLevel] = useState(1);
 
   // Array of image paths - replace with your actual image paths
-  const images = [
-    "bg-img/1.jpg",
-    "bg-img/2.jpg",
-    "bg-img/3.jpg",
-    "bg-img/16.jpg",
-  ];
+  const images = ["crsl-img/crsl-0.jpg", "crsl-img/crsl-1.jpg"];
 
   // Continuous zoom effect
   useEffect(() => {
@@ -81,10 +76,10 @@ export default function CarouselSection() {
               to="/shop"
               className="px-8 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
-              Get Started
+              Shop With Us
             </Link>
             <Link
-              href="/contact"
+              to="/contact"
               className="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Contact Us

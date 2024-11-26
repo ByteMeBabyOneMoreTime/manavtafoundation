@@ -20,10 +20,10 @@ const AboutSection = () => {
             <h3 className="text-2xl font-semibold text-green-700 mb-4">
               What we do with the earning money of NGO
             </h3>
-            <ProgressBar label="Greeb KO Dan" percentage={80} />
-            <ProgressBar label="XYZ yojna" percentage={70} />
-            <ProgressBar label="Xyz yojna" percentage={85} />
-            <ProgressBar label="Xyz kam" percentage={65} />
+            <ProgressBar label="Office plants" percentage={80} />
+            <ProgressBar label="Field manager" percentage={70} />
+            <ProgressBar label="Landscape design" percentage={85} />
+            <ProgressBar label="Garden Care" percentage={65} />
           </div>
           <div className="w-full lg:w-1/2 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
