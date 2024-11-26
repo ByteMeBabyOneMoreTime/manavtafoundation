@@ -29,6 +29,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/news" element={<News />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:categoryId" element={<Shop />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
