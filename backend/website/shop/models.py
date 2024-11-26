@@ -18,12 +18,19 @@ class product(models.Model):
     def __str__(self) -> str:
         return self.name
 
-# class orders(models.Model):
-#     address = models.TextField(max_length=10000)
-#     user_id = models.ForeignKey(User)
-#     items = 
-#     status =
-#     payment_amount =
+class orders(models.Model):
+    address = models.TextField(max_length=10000)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User')
+    items = models.ManyToManyField(product, related_name="product")
+    STATUS = (
+        ('Placed', 'Placed'),
+        ('Completed', 'Completed')
+    )
+    status = models.CharField(max_length=200, choices=STATUS, default='Placed')
+    payment_amount = models.IntegerField()
 
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.user_id.name}"
