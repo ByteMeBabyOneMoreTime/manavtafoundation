@@ -20,7 +20,7 @@ import Shop from "./pages/Shop";
 
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <div className="h-screen p-2 relative">
         <MainHeader />
         <Navbar />
@@ -38,7 +38,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 
