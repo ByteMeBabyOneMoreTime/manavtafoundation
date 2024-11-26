@@ -31,3 +31,23 @@ def get_categories(request):
         cate = list(catergory.objects.all().values())
         return JsonResponse({'data': cate}, safe=False)
 
+@csrf_exempt
+def get_categories_products(request, id):
+    if request.method == "POST":
+        return JsonResponse({'message': 'POST method not allowed'}, status=405)
+    else:
+        try:
+            cate = catergory.objects.get(id=id)
+            products = cate.products.all()  # Assuming a related name `products` exists
+            serialized_products = [
+                {
+                    "id": product.id,
+                    "name": product.name,
+                    "price": product.price,
+                    # Add other product fields as needed
+                }
+                for product in products
+            ]
+            return JsonResponse({'data': serialized_products}, safe=False)
+        except catergory.DoesNotExist:
+            return JsonResponse({'message': 'No Products found '}, status=405)
