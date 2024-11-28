@@ -62,9 +62,11 @@ const Navbar = () => {
 
       {/* Buttons */}
       <div className="hidden md:flex space-x-4">
-        <button className="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
-          🛒
-        </button>
+        <Link to="/cart">
+          <button className="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
+            🛒
+          </button>
+        </Link>
         <button className="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
           ❤️
         </button>
