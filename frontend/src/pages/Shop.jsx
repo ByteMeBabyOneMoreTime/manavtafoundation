@@ -92,9 +92,15 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100">
       {/* Hero Section */}
-      <div className="relative h-[40vh] overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
+      <div
+        className="relative h-[40vh] overflow-hidden"
+        style={{
+          backgroundImage: "url(bg-img/24.jpg)",
+          transform: "translateZ(0)",
+        }}
+      >
+        <div className="absolute inset-0 flex items-center justify-center ">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
           <h1 className="text-5xl font-bold text-white text-center drop-shadow-lg">
             {categoryId
               ? `${categories.find((cat) => cat.id.toString() === categoryId)?.name || "Shop"}`
