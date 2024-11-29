@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Heart, ShoppingCart, Eye } from "lucide-react";
 
 const Shop = () => {
   const [loading, setLoading] = useState(true);
@@ -9,8 +10,9 @@ const Shop = () => {
   const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
+  const [wishlist, setWishlist] = useState([]);
 
-  // Get category ID from URL params
+  const navigate = useNavigate();
   const { categoryId } = useParams();
 
   // Fetch Categories
@@ -35,13 +37,11 @@ const Shop = () => {
         setLoading(true);
         let response;
 
-        // If categoryId is provided, use category-specific API
         if (categoryId) {
           response = await axios.get(
             `https://manavtafoundation-sq6h.onrender.com/products/filter/${categoryId}`,
           );
         } else {
-          // If no category, fetch all products
           response = await axios.get(
             "https://manavtafoundation-sq6h.onrender.com/products/download",
           );
@@ -80,6 +80,21 @@ const Shop = () => {
   );
   const totalPages = Math.ceil(products.length / productsPerPage);
 
+  // Wishlist Toggle
+  const toggleWishlist = (productId) => {
+    setWishlist((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+  };
+
+  // Add to Cart (Placeholder)
+  const addToCart = (product) => {
+    // Implement actual cart logic
+    console.log("Added to cart:", product);
+  };
+
   // Loading state
   if (loading) {
     return (
@@ -89,27 +104,29 @@ const Shop = () => {
     );
   }
 
+  // Get category name or default
+  const categoryName = categoryId
+    ? categories.find((cat) => cat.id.toString() === categoryId)?.name || "Shop"
+    : "Discover Our Plants";
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100">
-      {/* Hero Section */}
+      {/* Hero Section with Persistent Background */}
       <div
-        className="relative h-[40vh] overflow-hidden"
+        className="relative h-[40vh] overflow-hidden bg-cover bg-center"
         style={{
           backgroundImage: "url(bg-img/24.jpg)",
-          transform: "translateZ(0)",
+          backgroundAttachment: "fixed",
         }}
       >
-        <div className="absolute inset-0 flex items-center justify-center ">
+        <div className="absolute inset-0 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-          <h1 className="text-5xl font-bold text-white text-center drop-shadow-lg">
-            {categoryId
-              ? `${categories.find((cat) => cat.id.toString() === categoryId)?.name || "Shop"}`
-              : "Discover Our Plants"}
+          <h1 className="text-5xl font-bold text-white text-center drop-shadow-lg relative z-10">
+            {categoryName}
           </h1>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-6 mb-8">
           {/* Categories */}
@@ -176,35 +193,68 @@ const Shop = () => {
                   {currentProducts.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow group"
+                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow group relative"
                     >
+                      {/* Wishlist Button */}
+                      <button
+                        onClick={() => toggleWishlist(product.id)}
+                        className="absolute top-4 right-4 z-10 bg-white/80 p-2 rounded-full shadow-md hover:bg-white transition-colors"
+                      >
+                        <Heart
+                          className={`w-6 h-6 ${
+                            wishlist.includes(product.id)
+                              ? "text-red-500 fill-current"
+                              : "text-gray-500"
+                          }`}
+                        />
+                      </button>
+
+                      {/* Product Image with Hover Effects */}
                       <div className="relative overflow-hidden">
                         <img
                           src={product.image || "/api/placeholder/400/320"}
                           alt={product.name}
                           className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                         />
+
+                        {/* Hover Overlay */}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors">
                           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="flex gap-2">
-                              <button className="flex-1 bg-white/90 hover:bg-white text-green-600 py-2 rounded-lg backdrop-blur-sm transition-colors">
-                                Add to Cart
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => addToCart(product)}
+                                className="flex-1 bg-white/90 hover:bg-white text-green-600 py-2 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center space-x-2"
+                              >
+                                <ShoppingCart className="w-5 h-5" />
+                                <span>Add to Cart</span>
                               </button>
-                              <button className="w-12 h-10 flex items-center justify-center bg-white/90 hover:bg-white text-red-500 rounded-lg backdrop-blur-sm transition-colors">
-                                ♥
+                              <button
+                                onClick={() =>
+                                  navigate(`/product/${product.id}`)
+                                }
+                                className="w-12 h-10 flex items-center justify-center bg-white/90 hover:bg-white text-green-600 rounded-lg backdrop-blur-sm transition-colors"
+                              >
+                                <Eye className="w-5 h-5" />
                               </button>
                             </div>
                           </div>
                         </div>
                       </div>
+
+                      {/* Product Details */}
                       <div className="p-4">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                          {product.name}
-                        </h3>
+                        <Link
+                          to={`/product/${product.id}`}
+                          className="block hover:text-green-600 transition-colors"
+                        >
+                          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                            {product.name}
+                          </h3>
+                        </Link>
                         <p className="text-green-600 font-bold">
                           ₹{product.price.toLocaleString()}
                         </p>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm text-gray-500 mt-1 line-clamp-2">
                           {product.description}
                         </p>
                       </div>

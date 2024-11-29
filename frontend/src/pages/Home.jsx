@@ -114,20 +114,21 @@ const testimonials = [
       "Manavta is a pleasure to work with. Their ideas are creative, they came up with imaginative solutions to some tricky issues, their landscaping and planting contacts are equally excellent we have a beautiful but also manageable garden as a result. Thank you!",
   },
   {
-    id: 2,
-    name: "Dr. Himanshu",
-    role: "CEO of manavatanurssery",
-    image: "/dr-himanshu-manavta-nuurssary.jpg",
+    id: 3,
+    name: "Prashant Shrivastava",
+    role: "Local Guide",
+    image:
+      "https://lh5.googleusercontent.com/p/AF1QipPqZRRxboUXAXq969L36qX1denMUSEcZ3U1F0fp=w600-h321-p-k-no",
     quote:
-      "ManavtaNurssery is a pleasure to work with. Their ideas are creative, they came up with imaginative solutions to some tricky issues, their landscaping and planting contacts are equally excellent we have a beautiful but also manageable garden as a result. Thank you!",
+      "Manavta Nursery is doing an outstanding job in promoting greenery and supporting the community. I deeply appreciate the dedication and efforts of the entire team at Manavta Nursery. Keep up the great work!",
   },
   {
     id: 3,
-    name: "Mr. Jonas Nick",
-    role: "CEO of NAVATECH",
-    image: "/bg-img/15.jpg",
+    name: "Pankaj Kumar",
+    image:
+      "https://lh3.googleusercontent.com/a-/ALV-UjXXMqcW37zACHXb6i1K_0uLUEgiFjBGDS1SljvLoBuYICFb6n7l=w60-h60-p-rp-mo-br100",
     quote:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Error asperiores excepturi repudiandae dolor cupiditate facilis temporibus sint voluptas, unde labore et molestias corrupti eaque. Illum quo suscipit aut perspiciatis, atque eveniet impedit maxime iusto, exercitationem officia quasi et dolore vitae!",
+      "Manavta Nursery in Uttar Pradesh offers exceptional quality plants at affordable prices, especially in Fatehpur. The proceeds from this nursery are thoughtfully utilized to support underprivileged individuals by providing food and medical assistance. Truly a noble initiative combining environmental care with social welfare.",
   },
 ];
 

@@ -13,6 +13,7 @@ import NoPage from "./pages/Nopage";
 import News from "./pages/News";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
+import ProductDetail from "./pages/ProductsDetail";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:categoryId" element={<Shop />} />
           {/*<Route path="/shop/:categoryId/:productId" element={<Cart />} /> */}
+          <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
