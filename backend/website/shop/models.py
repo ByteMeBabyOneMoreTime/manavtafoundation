@@ -9,10 +9,17 @@ class catergory(models.Model):
 
 class product(models.Model):
     name = models.CharField(max_length=200)
+    botanical_name = models.CharField(max_length=200, default='None')
     description = models.TextField(max_length=30000)
     image = models.URLField()
     price = models.IntegerField()
     quantity = models.IntegerField()
+    PS = (
+        ('S', 'S'),
+        ('M', 'M'),
+        ('L', 'L')
+    )
+    plant_size = models.CharField(max_length=200, choices=PS, default='S')
     catergory = models.ManyToManyField(catergory, related_name="products")
     
     def __str__(self) -> str:

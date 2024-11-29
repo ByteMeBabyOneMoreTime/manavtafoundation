@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from api.views import validate_api_key
 from .models import product
 from .models import catergory
+from .models import orders
+from user.models import User
 
 @csrf_exempt
 def get_products(request, categories = "all"):
@@ -55,3 +58,11 @@ def get_categories_products(request, id):
         except catergory.DoesNotExist:
             return JsonResponse({'message': 'No Products found '}, status=405)
         
+# @validate_api_key
+# @csrf_exempt
+# def get_orders(request):
+#     if request.method == "POST":
+#         return JsonResponse({'message': 'POST method not allowed'}, status=405)
+#     else:
+#         data = 
+#         o = orders.ge
