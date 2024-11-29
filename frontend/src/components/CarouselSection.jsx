@@ -8,7 +8,15 @@ export default function CarouselSection() {
   const [zoomLevel, setZoomLevel] = useState(1);
 
   // Array of image paths - replace with your actual image paths
-  const images = ["crsl-img/crsl-0.jpg", "crsl-img/crsl-1.jpg"];
+  const images = [
+    "crsl-img/crsl-0.avif",
+    "crsl-img/crsl-1.avif",
+    "work-img/pf-2.jpg",
+    "work-img/pf-3.jpg",
+    "work-img/pf-4.jpg",
+    "work-img/pf-5.jpg",
+    "work-img/pf-7.jpg",
+  ];
 
   // Continuous zoom effect
   useEffect(() => {
@@ -62,7 +70,7 @@ export default function CarouselSection() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50" />
 
-      {/* Content */}
+      {/* Content 
       <div className="relative z-10 container mx-auto flex items-center justify-center h-full text-center text-white">
         <div className="max-w-2xl">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
@@ -87,6 +95,7 @@ export default function CarouselSection() {
           </div>
         </div>
       </div>
+      */}
     </section>
   );
 }

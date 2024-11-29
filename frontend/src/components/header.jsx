@@ -66,44 +66,77 @@ const Header = () => (
   </header>
 );
 
-const MainContent = () => (
-  <section className="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-    {/* Logo on the right */}
-    <div className="md:col-span-2 flex justify-center md:justify-end">
-      <img
-        src="logos.png"
-        alt="Manavta Nursery Logo"
-        className="w-32 h-32 md:w-40 md:h-40 object-contain"
-      />
-    </div>
+const MainContent = () => {
+  const [displayText, setDisplayText] = useState("");
+  const taglines = [
+    "मिशन घर घर हरियाली से गरीब के घर खुशहाली",
+    "हर पौधा, एक नई आशा",
+    "पर्यावरण संरक्षण हमारा कर्तव्य",
+  ];
+  const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0);
 
-    {/* Heading in the center */}
-    <div className="md:col-span-8 text-center">
-      <h1 className="text-3xl md:text-4xl font-bold text-green-800">
-        MANAVTA NURSERY
-      </h1>
-      <p className="text-lg md:text-xl text-red-600 mt-2 animate-pulse">
-        मिशन घर घर हरियाली से गरीब के घर खुशहाली
-      </p>
-    </div>
+  useEffect(() => {
+    let currentText = "";
+    let index = 0;
+    const currentTagline = taglines[currentTaglineIndex];
 
-    {/* Buttons on the left */}
-    <div className="md:col-span-2 flex justify-center md:justify-start space-x-4">
-      <Link
-        to="/register"
-        className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-      >
-        REGISTER
-      </Link>
-      <Link
-        to="/login"
-        className="py-2 px-4 md:px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-      >
-        LOGIN
-      </Link>
-    </div>
-  </section>
-);
+    const typingEffect = setInterval(() => {
+      if (index < currentTagline.length) {
+        currentText += currentTagline[index];
+        setDisplayText(currentText);
+        index++;
+      } else {
+        // Wait for 2 seconds, then clear and move to next tagline
+        setTimeout(() => {
+          setDisplayText("");
+          setCurrentTaglineIndex((prev) => (prev + 1) % taglines.length);
+        }, 2000);
+        clearInterval(typingEffect);
+      }
+    }, 100);
+
+    return () => clearInterval(typingEffect);
+  }, [currentTaglineIndex]);
+
+  return (
+    <section className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+      {/* Logo on the right */}
+      <div className="md:col-span-2 flex justify-center md:justify-end">
+        <img
+          src="logos.png"
+          alt="Manavta Nursery Logo"
+          className="w-64 h-64 md:w-72 md:h-72 object-contain"
+        />
+      </div>
+
+      {/* Heading in the center */}
+      <div className="md:col-span-8 text-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-green-800">
+          MANAVTA NURSERY
+        </h1>
+        <p className="text-xl md:text-2xl text-red-600 mt-2 min-h-[40px]">
+          {displayText}
+          <span className="animate-pulse">|</span>
+        </p>
+      </div>
+      {/* Buttons on the left */}
+      <div className="md:col-span-2 flex justify-center md:justify-start space-x-4">
+        <Link
+          to="/register"
+          className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+        >
+          REGISTER
+        </Link>
+        <Link
+          to="/login"
+          className="py-2 px-4 md:px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+        >
+          LOGIN
+        </Link>
+      </div>
+    </section>
+  );
+};
 
 const MainHeader = () => {
   const [isLoading, setIsLoading] = useState(true);

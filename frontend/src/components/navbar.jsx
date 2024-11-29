@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-green-700 p-4 flex justify-between items-center w-full">
-      <div className="text-white font-bold text-2xl"></div>
+      <div className="text-white font-bold text-3xl"></div>
 
       {/* Navigation Links */}
       <div
@@ -18,43 +18,43 @@ const Navbar = () => {
       >
         <Link
           to="/"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           HOME
         </Link>
         <Link
           to="/about"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           ABOUT
         </Link>
         <Link
           to="/services"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           SERVICES
         </Link>
         <Link
           to="/gallery"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           GALLERY
         </Link>
         <Link
           to="/shop"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           SHOP
         </Link>
         <Link
           to="/news"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           NEWS
         </Link>
         <Link
           to="/contact"
-          className="text-white hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
+          className="text-white text-lg font-bold hover:bg-green-500 py-2 px-4 rounded-md transition duration-300"
         >
           CONTACT US
         </Link>
@@ -62,10 +62,12 @@ const Navbar = () => {
 
       {/* Buttons */}
       <div className="hidden md:flex space-x-4">
-        <button className="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
-          🛒
-        </button>
-        <button className="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
+        <Link to="/cart">
+          <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
+            🛒
+          </button>
+        </Link>
+        <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
           ❤️
         </button>
       </div>
