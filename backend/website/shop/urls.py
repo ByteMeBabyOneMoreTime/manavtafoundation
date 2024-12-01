@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     path('download', views.get_products, name="download"),
+    path('download/<pid>', views.get_product_by_id, name="download by id"),
     path('categories', views.get_categories, name="categories"),
     path('filter/<id>', views.get_categories_products, name="filter")
+    
 ]
