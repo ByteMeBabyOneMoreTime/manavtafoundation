@@ -114,7 +114,7 @@ const testimonials = [
       "Manavta is a pleasure to work with. Their ideas are creative, they came up with imaginative solutions to some tricky issues, their landscaping and planting contacts are equally excellent we have a beautiful but also manageable garden as a result. Thank you!",
   },
   {
-    id: 3,
+    id: 2,
     name: "Prashant Shrivastava",
     role: "Local Guide",
     image:
