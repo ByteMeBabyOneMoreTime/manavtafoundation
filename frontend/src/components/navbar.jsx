@@ -58,9 +58,21 @@ const Navbar = () => {
         >
           CONTACT US
         </Link>
+
+        {/* Mobile Cart and Heart Buttons */}
+        <div className="md:hidden flex space-x-4 mt-4">
+          <Link to="/cart" className="w-full">
+            <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 w-full">
+              🛒 Cart
+            </button>
+          </Link>
+          <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 w-full">
+            ❤️ Favorites
+          </button>
+        </div>
       </div>
 
-      {/* Buttons */}
+      {/* Desktop Cart and Heart Buttons */}
       <div className="hidden md:flex space-x-4">
         <Link to="/cart">
           <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
