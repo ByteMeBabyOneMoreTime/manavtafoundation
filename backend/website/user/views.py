@@ -48,7 +48,7 @@ def login(request):
                 if user_cache.password == password:
                     session = session_key.objects.filter(user=user_cache).first()
                     if session:
-                        return JsonResponse({'message': f'{session.id}'}, status=200)
+                        return JsonResponse({'message': f'{session.id}', "uid" : f"{user_cache.id}"}, status=200)
                     else:
                         get_session = session_key(user=user_cache)
                         get_session.save()
