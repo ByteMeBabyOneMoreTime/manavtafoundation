@@ -99,10 +99,19 @@ const Shop = () => {
     );
   };
 
-  // Add to Cart (Placeholder)
+  // Add to Cart Functionality
   const addToCart = (product) => {
-    // Implement actual cart logic
-    console.log("Added to cart:", product);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const productIndex = cart.findIndex((item) => item.id === product.id);
+
+    if (productIndex >= 0) {
+      cart[productIndex].Qty += 1;
+    } else {
+      cart.push({ id: product.id, Qty: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    console.log(`Added ${product.name} to cart.`);
   };
 
   // Loading state

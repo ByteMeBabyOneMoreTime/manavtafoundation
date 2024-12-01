@@ -74,6 +74,16 @@ const MainContent = () => {
     "पर्यावरण संरक्षण हमारा कर्तव्य",
   ];
   const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("session_id"));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("session_id");
+    setIsLoggedIn(false);
+  };
 
   useEffect(() => {
     let currentText = "";
@@ -121,18 +131,37 @@ const MainContent = () => {
       </div>
       {/* Buttons on the left */}
       <div className="md:col-span-2 flex justify-center md:justify-start space-x-4">
-        <Link
-          to="/register"
-          className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-        >
-          REGISTER
-        </Link>
-        <Link
-          to="/login"
-          className="py-2 px-4 md:px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-        >
-          LOGIN
-        </Link>
+        {isLoggedIn ? (
+          <>
+            <Link
+              to="/profile"
+              className="py-2 px-4 md:px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            >
+              PROFILE
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+            >
+              LOGOUT
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/register"
+              className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+            >
+              REGISTER
+            </Link>
+            <Link
+              to="/login"
+              className="py-2 px-4 md:px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+            >
+              LOGIN
+            </Link>
+          </>
+        )}
       </div>
     </section>
   );
