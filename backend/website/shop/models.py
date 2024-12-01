@@ -26,15 +26,32 @@ class product(models.Model):
         return self.name
 
 class orders(models.Model):
-    address = models.TextField(max_length=10000)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    email = models.EmailField(max_length=300)
+    Phone_number = models.CharField(max_length=300)
+
+    address_line_1 = models.TextField(max_length=10000)
+    address_line_2 = models.TextField(max_length=10000, blank=True, default="Not filled")
+    city = models.CharField(max_length=300)
+    state = models.CharField(max_length=300)
+    pincode = models.CharField(max_length=100)
+
     items = models.ManyToManyField(product, related_name="product")
     STATUS = (
+        ('Unverified', 'Unverified'),
         ('Placed', 'Placed'),
         ('Completed', 'Completed')
     )
     status = models.CharField(max_length=200, choices=STATUS, default='Placed')
+    
+    # Managing Payaments
     payment_amount = models.IntegerField()
+    METHOD = (
+        ('Cash On Delivery', 'Cash On Delivery'),
+        ('Online Via Qr', 'Online Via Qr')
+    )
+    payment_method = models.CharField(max_length=300, choices=METHOD, default="Cash On Delivery")
+    transaction_id = models.CharField(max_length=200, default="Cash On Delivery", blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

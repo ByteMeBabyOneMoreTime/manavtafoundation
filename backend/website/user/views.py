@@ -88,3 +88,37 @@ def logout(request):
             return JsonResponse({'message': f'An error occurred: {str(e)}'}, status=500)
     else:
         return JsonResponse({'message': 'GET method not allowed'}, status=405)
+    
+
+import json
+from functools import wraps
+from django.http import JsonResponse
+from .models import session_key
+
+def validate_session_key(func):
+    """
+    Wrapper function to validate the session key from the raw JSON body.
+    """
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        try:
+            # Parse the raw body as JSON
+            body_data = json.loads(request.body)
+            session_id = body_data.get('session_key')
+        except (json.JSONDecodeError, AttributeError):
+            return JsonResponse({'error': 'Invalid or missing JSON body'}, status=400)
+        
+        if not session_id:
+            return JsonResponse({'error': 'Session key is missing'}, status=400)
+        
+        try:
+            # Validate session key
+            session = session_key.objects.get(id=session_id)
+        except session_key.DoesNotExist:
+            return JsonResponse({'error': 'Invalid session key'}, status=403)
+        
+        # Pass user information to the wrapped function
+        request.user = session.user
+        return func(request, *args, **kwargs)
+    
+    return wrapper
