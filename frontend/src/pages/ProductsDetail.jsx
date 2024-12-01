@@ -53,6 +53,34 @@ const ProductDetail = () => {
     }
   };
 
+  /**
+   * Adds a product to the cart.
+   * Updates the local storage with cart details.
+   * If the product already exists in the cart, increases its quantity.
+   * Otherwise, adds it as a new entry.
+   */
+  const addToCart = (product) => {
+    try {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const productIndex = cart.findIndex((item) => item.id === product.id);
+
+      if (productIndex >= 0) {
+        // Update quantity if the product is already in the cart
+        cart[productIndex].Qty += quantity;
+      } else {
+        // Add new product to the cart
+        cart.push({ id: product.id, Qty: quantity });
+      }
+
+      // Save the updated cart back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      // alert(`${product.name} has been added to your cart.`);
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      // alert("Failed to add product to the cart. Please try again.");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-50 to-green-100">
@@ -156,7 +184,10 @@ const ProductDetail = () => {
 
               {/* Actions */}
               <div className="flex space-x-4 mb-6">
-                <button className="flex-1 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center">
+                <button
+                  onClick={() => addToCart(product)}
+                  className="flex-1 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center"
+                >
                   Add to Cart
                 </button>
                 <button className="flex-1 bg-green-100 text-green-700 py-3 rounded-lg hover:bg-green-200 transition-colors flex items-center justify-center">

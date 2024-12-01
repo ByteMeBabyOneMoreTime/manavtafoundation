@@ -1,27 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// Demo Cart Data (you'll replace this with actual cart management later)
-const DEMO_CART_ITEMS = [
-  {
-    id: 1,
-    name: "Birthday special money plant",
-    price: 79,
-    quantity: 2,
-    image: "https://iili.io/2cVik1S.th.pn",
-  },
-  {
-    id: 2,
-    name: "5 Best Indoor Plants Pack (Pack of 5)",
-    price: 1159,
-    quantity: 1,
-    image: "https://iili.io/2cVQErB.th.png",
-  },
-];
+import axios from "axios";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState(DEMO_CART_ITEMS);
+  const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch cart and product details
+  useEffect(() => {
+    const fetchCartDetails = async () => {
+      try {
+        // Retrieve cart from localStorage
+        const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+        // Fetch product details for each cart item
+        const productPromises = storedCart.map(async (cartItem) => {
+          try {
+            const response = await axios.get(
+              `https://manavtafoundation-sq6h.onrender.com/products/download/${cartItem.id}`,
+            );
+            return {
+              ...response.data.data[0],
+              quantity: cartItem.Qty, // Use the quantity from localStorage
+            };
+          } catch (error) {
+            console.error(`Error fetching product ${cartItem.id}:`, error);
+            return null;
+          }
+        });
+
+        // Filter out any failed fetches
+        const fetchedCartItems = (await Promise.all(productPromises)).filter(
+          (item) => item !== null,
+        );
+
+        setCartItems(fetchedCartItems);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error processing cart:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchCartDetails();
+  }, []);
 
   // Calculate total whenever cart items change
   useEffect(() => {
@@ -36,17 +59,42 @@ export default function Cart() {
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
 
+    // Update cart items in state
     const updatedCart = cartItems.map((item) =>
       item.id === id ? { ...item, quantity: newQuantity } : item,
     );
     setCartItems(updatedCart);
+
+    // Update localStorage
+    const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const updatedStoredCart = storedCart.map((cartItem) =>
+      cartItem.id === id ? { ...cartItem, Qty: newQuantity } : cartItem,
+    );
+    localStorage.setItem("cart", JSON.stringify(updatedStoredCart));
   };
 
   // Remove item from cart
   const removeItem = (id) => {
+    // Remove from state
     const updatedCart = cartItems.filter((item) => item.id !== id);
     setCartItems(updatedCart);
+
+    // Remove from localStorage
+    const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const updatedStoredCart = storedCart.filter(
+      (cartItem) => cartItem.id !== id,
+    );
+    localStorage.setItem("cart", JSON.stringify(updatedStoredCart));
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 flex items-center justify-center">
+        <div className="text-2xl text-gray-600">Loading cart...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 py-12">
