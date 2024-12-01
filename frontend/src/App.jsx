@@ -14,6 +14,8 @@ import News from "./pages/News";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductsDetail";
+import Checkout from "./pages/Checkout";
+import OrderPlaced from "./pages/OrderPlaced";
 
 function App() {
   return (
@@ -35,7 +37,9 @@ function App() {
           {/*<Route path="/shop/:categoryId/:productId" element={<Cart />} /> */}
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<NoPage />} />
+          <Route path="/order" element={<OrderPlaced />} />
         </Routes>
         <Footer />
       </div>

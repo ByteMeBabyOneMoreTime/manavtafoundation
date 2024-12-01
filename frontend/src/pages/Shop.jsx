@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Heart, ShoppingCart, Eye } from "lucide-react";
+import "../App.css";
 
 const Shop = () => {
   const [loading, setLoading] = useState(true);
@@ -11,6 +12,7 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
   const [wishlist, setWishlist] = useState([]);
+  const [currentCategoryName, setCurrentCategoryName] = useState("All Items");
 
   const navigate = useNavigate();
   const { categoryId } = useParams();
@@ -41,10 +43,18 @@ const Shop = () => {
           response = await axios.get(
             `https://manavtafoundation-sq6h.onrender.com/products/filter/${categoryId}`,
           );
+          // Update current category name when a category is selected
+          const selectedCategory = categories.find(
+            (cat) => cat.id.toString() === categoryId,
+          );
+          setCurrentCategoryName(
+            selectedCategory ? selectedCategory.name : "All Items",
+          );
         } else {
           response = await axios.get(
             "https://manavtafoundation-sq6h.onrender.com/products/download",
           );
+          setCurrentCategoryName("All Items");
         }
 
         let filteredProducts = response.data.data;
@@ -69,7 +79,7 @@ const Shop = () => {
     };
 
     fetchProducts();
-  }, [categoryId, sortOption]);
+  }, [categoryId, sortOption, categories]);
 
   // Pagination
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -104,30 +114,26 @@ const Shop = () => {
     );
   }
 
-  // Get category name or default
-  const categoryName = categoryId
-    ? categories.find((cat) => cat.id.toString() === categoryId)?.name || "Shop"
-    : "Discover Our Plants";
-
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100">
       {/* Hero Section with Persistent Background */}
-      <div
-        className="relative h-[40vh] overflow-hidden bg-cover bg-center"
-        style={{
-          backgroundImage: "url(bg-img/24.jpg)",
-          backgroundAttachment: "fixed",
-        }}
-      >
+      <div className="relative h-[40vh] overflow-hidden hero-background">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
           <h1 className="text-5xl font-bold text-white text-center drop-shadow-lg relative z-10">
-            {categoryName}
+            SHOP
           </h1>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Dynamic Category Heading */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-800">
+            {currentCategoryName}
+          </h2>
+        </div>
+
         <div className="flex flex-col md:flex-row gap-6 mb-8">
           {/* Categories */}
           <div className="md:w-1/4">
@@ -136,6 +142,14 @@ const Shop = () => {
                 Categories
               </h2>
               <div className="space-y-3">
+                <Link
+                  to="/shop"
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-50 transition-all group"
+                >
+                  <span className="text-gray-700 group-hover:text-green-600">
+                    All Items
+                  </span>
+                </Link>
                 {categories.map((category) => (
                   <Link
                     key={category.id}
@@ -147,17 +161,6 @@ const Shop = () => {
                     </span>
                   </Link>
                 ))}
-                {/* Option to clear category filter */}
-                {categoryId && (
-                  <Link
-                    to="/shop"
-                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-50 transition-all group"
-                  >
-                    <span className="text-gray-700 group-hover:text-green-600">
-                      Clear Filter
-                    </span>
-                  </Link>
-                )}
               </div>
             </div>
           </div>
@@ -195,6 +198,7 @@ const Shop = () => {
                       key={product.id}
                       className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow group relative"
                     >
+                      {/* Rest of the product card remains the same */}
                       {/* Wishlist Button */}
                       <button
                         onClick={() => toggleWishlist(product.id)}
