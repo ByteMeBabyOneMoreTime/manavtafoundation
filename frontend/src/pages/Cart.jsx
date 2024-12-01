@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // Demo Cart Data (you'll replace this with actual cart management later)
 const DEMO_CART_ITEMS = [
@@ -151,12 +152,14 @@ export default function Cart() {
                 </div>
               </div>
 
-              <button
-                className="w-full mt-6 py-3 bg-green-500 text-white rounded-lg 
-                           hover:bg-green-600 transition font-semibold"
-              >
-                Proceed to Checkout
-              </button>
+              <Link to="/checkout">
+                <button
+                  className="w-full mt-6 py-3 bg-green-500 text-white rounded-lg 
+                    hover:bg-green-600 transition font-semibold"
+                >
+                  Proceed to Checkout
+                </button>
+              </Link>
             </div>
           </div>
         )}
