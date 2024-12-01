@@ -25,6 +25,7 @@ class product(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class orders(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     email = models.EmailField(max_length=300)
@@ -36,7 +37,6 @@ class orders(models.Model):
     state = models.CharField(max_length=300)
     pincode = models.CharField(max_length=100)
 
-    items = models.ManyToManyField(product, related_name="product")
     STATUS = (
         ('Unverified', 'Unverified'),
         ('Placed', 'Placed'),
@@ -58,3 +58,11 @@ class orders(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user_id.name}"
+    
+class order_item(models.Model):
+    order = models.ForeignKey(orders, on_delete=models.CASCADE, related_name="order_items")
+    product = models.ForeignKey(product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.product.name} (x{self.quantity})"

@@ -122,3 +122,29 @@ def validate_session_key(func):
         return func(request, *args, **kwargs)
     
     return wrapper
+
+
+@validate_api_key
+@validate_session_key
+@csrf_exempt
+def get_user_details(request):
+    if request.method == "GET":
+        try:
+            user = request.user  # The user is attached to the request in the validate_session_key decorator
+
+            user_details = {
+                'id': str(user.id),
+                'name': user.name,
+                'email': user.email,
+                'phone_number': user.phone_number,
+                'created_at': user.created_at,
+                'updated_at': user.updated_at,
+            }
+
+            return JsonResponse(user_details, status=200)
+
+        except Exception as e:
+            return JsonResponse({'message': f'An error occurred: {str(e)}'}, status=500)
+    
+    else:
+        return JsonResponse({'message': 'GET method not allowed'}, status=405)
