@@ -103,17 +103,14 @@ def manage_order(request):
             if not user:
                 return JsonResponse({'message': 'User not found'}, status=404)
 
-            # Ensure products are passed in the request
             if not products:
                 return JsonResponse({'message': 'No products provided in the order'}, status=400)
 
-            # Calculate the total payment amount first
             total_amount = 0
             for product_data in products:
                 product_id = product_data.get("id")
                 qty = product_data.get("Qty")
 
-                # Validate product and quantity
                 if not product_id or qty is None:
                     return JsonResponse({'message': 'Invalid product data'}, status=400)
 
@@ -123,7 +120,6 @@ def manage_order(request):
 
                 total_amount += product_instance.price * qty
 
-            # Create the order with the calculated payment amount
             order = orders.objects.create(
                 user_id=user,
                 email=user.email,
@@ -135,15 +131,13 @@ def manage_order(request):
                 pincode=pincode,
                 payment_method=payment_method,
                 transaction_id=transac_id,
-                payment_amount=total_amount  # Set the calculated payment amount
+                payment_amount=total_amount  
             )
 
-            # Create order items (Intermediate model)
             for product_data in products:
                 product_id = product_data.get("id")
                 qty = product_data.get("Qty")
 
-                # Create the order_item
                 product_instance = product.objects.filter(id=product_id).first()
                 order_item_instance = order_item.objects.create(
                     order=order,
@@ -173,10 +167,8 @@ def order_details(request, uid):
             if not user:
                 return JsonResponse({'message': 'User not found'}, status=404)
 
-            # Retrieve all orders for the user
             user_orders = orders.objects.filter(user_id=user)
 
-            # Prepare order data to return
             orders_data = []
             for order in user_orders:
                 order_details = {
@@ -194,7 +186,6 @@ def order_details(request, uid):
                     'updated_at': order.updated_at
                 }
 
-                # Get order items and their details using the related_name 'order_items'
                 order_items = order.order_items.all()  # Use 'order_items' here
                 items_data = []
                 for item in order_items:
