@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Heart, Share2, ChevronLeft, Star, Minus, Plus } from "lucide-react";
+import { Heart, ChevronLeft, Minus, Plus, X } from "lucide-react";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  const { productId } = useParams(); // Get the product ID from URL params
-  const [product, setProduct] = useState(null); // State to store product details
+  const { productId } = useParams();
+  const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         setLoading(true);
-
-        // Fetch all products
         const response = await axios.get(
           "https://manavtafoundation-sq6h.onrender.com/products/download",
         );
 
-        // Extract the product data and filter by ID
         const allProducts = response.data.data;
         const selectedProduct = allProducts.find(
           (prod) => prod.id === parseInt(productId),
@@ -29,7 +27,7 @@ const ProductDetail = () => {
 
         if (selectedProduct) {
           setProduct(selectedProduct);
-          setMainImage(selectedProduct.image); // Set the main image
+          setMainImage(selectedProduct.image);
         }
 
         setLoading(false);
@@ -54,32 +52,30 @@ const ProductDetail = () => {
     }
   };
 
-  /**
-   * Adds a product to the cart.
-   * Updates the local storage with cart details.
-   * If the product already exists in the cart, increases its quantity.
-   * Otherwise, adds it as a new entry.
-   */
   const addToCart = (product) => {
     try {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       const productIndex = cart.findIndex((item) => item.id === product.id);
 
       if (productIndex >= 0) {
-        // Update quantity if the product is already in the cart
         cart[productIndex].Qty += quantity;
       } else {
-        // Add new product to the cart
         cart.push({ id: product.id, Qty: quantity });
       }
 
-      // Save the updated cart back to localStorage
       localStorage.setItem("cart", JSON.stringify(cart));
       alert(`${product.name} has been added to your cart.`);
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      // alert("Failed to add product to the cart. Please try again.");
     }
+  };
+
+  const openImageModal = () => {
+    setIsImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
   };
 
   if (loading) {
@@ -121,7 +117,8 @@ const ProductDetail = () => {
               <img
                 src={mainImage || "/api/placeholder/600/400"}
                 alt={product.name}
-                className="w-full h-[500px] object-cover rounded-xl shadow-md"
+                className="w-full h-[500px] object-cover rounded-xl shadow-md cursor-pointer"
+                onClick={openImageModal}
               />
             </div>
 
@@ -142,6 +139,31 @@ const ProductDetail = () => {
               )}
             </div>
           </div>
+
+          {/* Image Modal */}
+          {isImageModalOpen && (
+            <div
+              className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-8"
+              onClick={closeImageModal}
+            >
+              <div
+                className="relative max-w-4xl max-h-[90vh] w-full h-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="absolute -top-10 right-0 z-60 text-white"
+                  onClick={closeImageModal}
+                >
+                  <X size={32} />
+                </button>
+                <img
+                  src={mainImage || "/api/placeholder/600/400"}
+                  alt={product.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Details Section */}
           <div>
