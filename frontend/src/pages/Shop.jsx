@@ -112,7 +112,7 @@ const Shop = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    setMessage({ type: "success", text: "Product Added to Cart" });
+    alert(`Added ${product.name} to cart.`);
     console.log(`Added ${product.name} to cart.`);
   };
 

@@ -38,6 +38,7 @@ function App() {
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NoPage />} />
           <Route path="/order" element={<OrderPlaced />} />
         </Routes>

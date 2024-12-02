@@ -109,39 +109,39 @@ const MainContent = () => {
   }, [currentTaglineIndex]);
 
   return (
-    <section className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-      {/* Logo on the right */}
-      <div className="md:col-span-2 flex justify-center md:justify-end">
+    <section className="container mx-auto px-4 py-2 flex flex-col sm:flex-row items-center justify-between space-y-3 sm:space-y-0">
+      {/* Logo */}
+      <div className="flex justify-center sm:w-1/4">
         <img
           src="logos.png"
           alt="Manavta Nursery Logo"
-          className="w-64 h-64 md:w-72 md:h-72 object-contain"
+          className="w-24 h-24 md:w-36 md:h-36 object-contain"
         />
       </div>
 
-      {/* Heading in the center */}
-      <div className="md:col-span-8 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-green-800">
+      {/* Heading */}
+      <div className="text-center sm:w-1/2">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-green-800">
           MANAVTA NURSERY
         </h1>
-        <p className="text-xl md:text-2xl text-red-600 mt-2 min-h-[40px]">
-          {displayText}
-          <span className="animate-pulse">|</span>
+        <p className="text-lg md:text-xl text-red-600 mt-1 min-h-[30px]">
+          {displayText} <span className="animate-pulse">|</span>
         </p>
       </div>
-      {/* Buttons on the left */}
-      <div className="md:col-span-2 flex justify-center md:justify-start space-x-4">
+
+      {/* Buttons */}
+      <div className="flex justify-center sm:w-1/4 space-x-2">
         {isLoggedIn ? (
           <>
             <Link
               to="/profile"
-              className="py-2 px-4 md:px-6 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+              className="py-1 px-3 md:py-2 md:px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm md:text-base"
             >
               PROFILE
             </Link>
             <button
               onClick={handleLogout}
-              className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+              className="py-1 px-3 md:py-2 md:px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm md:text-base"
             >
               LOGOUT
             </button>
@@ -150,13 +150,13 @@ const MainContent = () => {
           <>
             <Link
               to="/register"
-              className="py-2 px-4 md:px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+              className="py-1 px-3 md:py-2 md:px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm md:text-base"
             >
               REGISTER
             </Link>
             <Link
               to="/login"
-              className="py-2 px-4 md:px-6 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+              className="py-1 px-3 md:py-2 md:px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm md:text-base"
             >
               LOGIN
             </Link>

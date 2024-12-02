@@ -1,205 +1,142 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
   const [orderDetails, setOrderDetails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      const session_id = localStorage.getItem("session_id");
-      const user_id = localStorage.getItem("user_id");
-      const apiKey = import.meta.env.VITE_API_KEY;
-
-      if (!session_id) {
-        navigate("/login");
-        return;
-      }
-
       try {
-        // Fetch User Details
-        console.log(session_id);
-        console.log(user_id);
-        console.log(apiKey);
+        // Get session key from localStorage
+        const sessionKey = "9a6dd717-7bcb-419e-9341-680d2fc2aca0"; // Hardcoded session key
+        // API key from the header
+        const apiKey = "36f23429-a2ef-400c-ba33-a1b7b31b328e"; // Hardcoded API key
+
+        // Fetch user details
         const userResponse = await axios.get(
           "https://manavtafoundation-sq6h.onrender.com/user",
-          { session_key: session_id },
           {
             headers: {
-              "Content-Type": "application/json",
               key: apiKey,
+              session_key: sessionKey,
             },
           },
         );
-        console.log(userResponse);
+
         setUserDetails(userResponse.data);
 
-        // Fetch Order Details
+        // Fetch order details
+        const userId = userResponse.data.id; // Use the ID from user details
         const orderResponse = await axios.get(
-          `https://manavtafoundation-sq6h.onrender.com/products/order_details/${user_id}`,
-          { session_key: session_id },
+          `https://manavtafoundation-sq6h.onrender.com/products/order_details/${userId}`,
           {
             headers: {
-              "Content-Type": "application/json",
               key: apiKey,
+              session_key: sessionKey,
             },
           },
         );
-        console.log(orderResponse);
-        setOrderDetails(orderResponse.data.orders);
 
-        setIsLoading(false);
-      } catch (error) {
+        setOrderDetails(orderResponse.data.orders);
+        setLoading(false);
+      } catch (err) {
         console.error(
-          "Error fetching profile data:",
-          error.response ? error.response.data : error.message,
+          "Error fetching data:",
+          err.response ? err.response.data : err.message,
         );
-        setError(
-          error.response
-            ? error.response.data.message
-            : "Failed to load profile data",
-        );
-        setIsLoading(false);
+        setError(err.response ? err.response.data.message : err.message);
+        setLoading(false);
       }
     };
 
     fetchProfileData();
-  }, [navigate]);
+  }, []);
 
-  // Loading State
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 flex items-center justify-center">
-        <div className="text-2xl text-gray-600">Loading profile...</div>
-      </div>
-    );
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-  // Error State
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-xl shadow-lg text-center">
-          <p className="text-2xl text-red-600 mb-4">{error}</p>
-          <button
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-            onClick={() => navigate("/login")}
-          >
-            Go to Login
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Render Profile
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* User Profile Section */}
-          <div className="md:col-span-1 bg-white rounded-xl shadow-lg p-8">
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">
-              My Profile
-            </h1>
-            {/* 
-            <div className="space-y-4">
-              <div>
-                <p className="text-gray-600">Name</p>
-                <p className="font-semibold">{userDetails.name}</p>
+    <div className="p-6 max-w-4xl mx-auto">
+      {/* User Details Section */}
+      {userDetails && (
+        <div className="bg-white shadow-md rounded-lg p-6 mb-6">
+          <h2 className="text-2xl font-bold mb-4">User Profile</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="font-semibold">Name:</p>
+              <p>{userDetails.name}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Email:</p>
+              <p>{userDetails.email}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Phone Number:</p>
+              <p>{userDetails.phone_number}</p>
+            </div>
+            <div>
+              <p className="font-semibold">Account Created:</p>
+              <p>{new Date(userDetails.created_at).toLocaleDateString()}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Order Details Section */}
+      <div className="bg-white shadow-md rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-4">Order History</h2>
+        {orderDetails.length === 0 ? (
+          <p>No orders found.</p>
+        ) : (
+          orderDetails.map((order) => (
+            <div key={order.order_id} className="border-b pb-4 mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <p className="font-semibold">Order ID: {order.order_id}</p>
+                  <p>
+                    Status: <strong>{order.status}</strong>
+                  </p>
+                </div>
+                <p className="text-lg font-bold">₹{order.payment_amount}</p>
               </div>
-              <div>
-                <p className="text-gray-600">Email</p>
-                <p className="font-semibold">{userDetails.email}</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Phone Number</p>
-                <p className="font-semibold">{userDetails.phone_number}</p>
-              </div>
-              <div>
-                <p className="text-gray-600">Member Since</p>
-                <p className="font-semibold">
-                  {new Date(userDetails.created_at).toLocaleDateString()}
+
+              <div className="mb-2">
+                <p>Delivery Address:</p>
+                <p>
+                  {order.address_line_1}, {order.address_line_2}
+                </p>
+                <p>
+                  {order.city}, {order.state} - {order.pincode}
                 </p>
               </div>
-            */}
-          </div>
-        </div>
 
-        {/* Order History Section 
-          <div className="md:col-span-2 bg-white rounded-xl shadow-lg p-8">
-            <h2 className="text-3xl font-bold mb-6 text-gray-800">
-              Order History
-            </h2>
-            {orderDetails.length === 0 ? (
-              <div className="text-center text-gray-600">No orders found</div>
-            ) : (
-              <div className="space-y-6">
-                {orderDetails.map((order) => (
-                  <div
-                    key={order.order_id}
-                    className="border-b pb-6 last:border-b-0"
-                  >
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-xl font-semibold">
-                        Order #{order.order_id}
-                      </h3>
-                      <span
-                        className={`font-bold ${
-                          order.status === "Placed"
-                            ? "text-green-600"
-                            : "text-gray-600"
-                        }`}
-                      >
-                        <strong>{order.status.toUpperCase()}</strong>
-                      </span>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-gray-600">Shipping Address</p>
-                        <p className="font-semibold">
-                          {order.address_line_1}, {order.address_line_2 || ""}
-                          <br />
-                          {order.city}, {order.state} - {order.pincode}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-gray-600">Payment Details</p>
-                        <p className="font-semibold">
-                          Total Amount: ₹{order.payment_amount.toLocaleString()}
-                          <br />
-                          Method: {order.payment_method}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-4">
-                      <p className="text-gray-600 mb-2">Order Items</p>
-                      <div className="space-y-2">
-                        {order.items.map((item) => (
-                          <div
-                            key={item.product_name}
-                            className="flex justify-between"
-                          >
-                            <span>{item.product_name}</span>
-                            <span>
-                              {item.quantity} x ₹{item.price} = ₹
-                              {item.total_price.toLocaleString()}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div>
+                <h3 className="font-semibold mb-2">Order Items:</h3>
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="text-left p-2">Product</th>
+                      <th className="text-center p-2">Quantity</th>
+                      <th className="text-right p-2">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order.items.map((item, index) => (
+                      <tr key={index}>
+                        <td className="p-2">{item.product_name}</td>
+                        <td className="text-center p-2">{item.quantity}</td>
+                        <td className="text-right p-2">₹{item.total_price}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            )}
-          </div>
-        </div>
-          */}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
