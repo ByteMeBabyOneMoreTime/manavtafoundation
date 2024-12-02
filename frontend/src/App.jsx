@@ -34,7 +34,6 @@ function App() {
           <Route path="/news" element={<News />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:categoryId" element={<Shop />} />
-          {/*<Route path="/shop/:categoryId/:productId" element={<Cart />} /> */}
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

@@ -1,54 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-// Hardcoded Cart Items
-const HARDCODED_CART_ITEMS = [
-  {
-    id: 1,
-    name: "Birthday special money plant",
-    price: 79,
-    quantity: 2,
-    image: "https://iili.io/2cVik1S.th.pn",
-  },
-  {
-    id: 2,
-    name: "5 Best Indoor Plants Pack (Pack of 5)",
-    price: 1159,
-    quantity: 1,
-    image: "https://iili.io/2cVQErB.th.png",
-  },
-];
+import axios from "axios";
 
 const Checkout = () => {
   const navigate = useNavigate();
 
-  // Calculate Total (Hardcoded)
-  const HARDCODED_TOTAL = HARDCODED_CART_ITEMS.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
-
-  // Form State
+  // States
+  const [cartItems, setCartItems] = useState([]);
+  const [productDetails, setProductDetails] = useState({});
+  const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
-    // Personal Details
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-
-    // Address Details
+    // Shipping Address
     addressLine1: "",
     addressLine2: "",
-    locality: "",
     city: "",
     state: "",
     pinCode: "",
 
     // Payment Method
-    paymentMethod: "online",
+    paymentMethod: "cod",
+    transactionId: "",
   });
 
-  // States Dropdown
+  // Indian States Dropdown
   const INDIAN_STATES = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -88,6 +63,52 @@ const Checkout = () => {
     "Puducherry",
   ];
 
+  // Fetch cart and product details
+  useEffect(() => {
+    const fetchCartDetails = async () => {
+      try {
+        // Retrieve cart from localStorage
+        const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+        // Fetch product details for each cart item
+        const productPromises = storedCart.map(async (cartItem) => {
+          try {
+            const response = await axios.get(
+              `https://manavtafoundation-sq6h.onrender.com/products/download/${cartItem.id}`,
+            );
+            return {
+              ...response.data.data[0],
+              quantity: cartItem.Qty, // Use the quantity from localStorage
+            };
+          } catch (error) {
+            console.error(`Error fetching product ${cartItem.id}:`, error);
+            return null;
+          }
+        });
+
+        // Filter out any failed fetches
+        const fetchedCartItems = (await Promise.all(productPromises)).filter(
+          (item) => item !== null,
+        );
+
+        setCartItems(fetchedCartItems);
+        setIsLoading(false);
+
+        // Calculate total
+        const cartTotal = fetchedCartItems.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0,
+        );
+        setTotal(cartTotal);
+      } catch (error) {
+        console.error("Error processing cart:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchCartDetails();
+  }, []);
+
   // Handle Input Change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -99,34 +120,8 @@ const Checkout = () => {
 
   // Form Validation
   const validateForm = () => {
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      addressLine1,
-      city,
-      state,
-      pinCode,
-    } = formData;
-
-    // Basic validation
-    if (!firstName || !lastName) {
-      alert("Please enter your full name");
-      return false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address");
-      return false;
-    }
-
-    const phoneRegex = /^[6-9]\d{9}$/;
-    if (!phoneRegex.test(phone)) {
-      alert("Please enter a valid 10-digit Indian phone number");
-      return false;
-    }
+    const { addressLine1, city, state, pinCode, paymentMethod, transactionId } =
+      formData;
 
     if (!addressLine1 || !city || !state || !pinCode) {
       alert("Please fill in all required address fields");
@@ -139,11 +134,19 @@ const Checkout = () => {
       return false;
     }
 
+    if (paymentMethod === "online" && !transactionId) {
+      alert("Please enter transaction ID for online payment");
+      return false;
+    }
+
     return true;
   };
 
+  const session_id = localStorage.getItem("session_id");
+  const user_id = localStorage.getItem("user_id");
+
   // Handle Form Submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -152,20 +155,77 @@ const Checkout = () => {
 
     // Prepare order details
     const orderDetails = {
-      ...formData,
-      items: HARDCODED_CART_ITEMS,
-      totalAmount: HARDCODED_TOTAL,
+      session_key: session_id,
+      user_id: user_id,
+      address_line_1: formData.addressLine1,
+      address_line_2: formData.addressLine2 || "",
+      city: formData.city,
+      state: formData.state,
+      pincode: formData.pinCode,
+      payment_method:
+        formData.paymentMethod === "online"
+          ? "Online Payment"
+          : "Cash On Delivery",
+      transaction_id: formData.transactionId || "",
+      products: JSON.parse(localStorage.getItem("cart") || "[]").map(
+        (item) => ({
+          id: item.id,
+          Qty: item.Qty,
+        }),
+      ),
     };
+    console.log(orderDetails);
 
-    // TODO: Integrate with backend order submission
-    console.log("Order Details:", orderDetails);
+    try {
+      const apiKey = import.meta.env.VITE_API_KEY;
+      const response = await axios.post(
+        "https://manavtafoundation-sq6h.onrender.com/products/order",
+        orderDetails,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            key: apiKey, // Add the API key as a custom header
+          },
+        },
+      );
+      console.log(response);
 
-    // Simulate order placement
-    alert("Order placed successfully!");
+      // Clear cart after successful order
+      localStorage.removeItem("cart");
 
-    // Navigate to order confirmation or home page
-    navigate("/order");
+      // Navigate to order confirmation
+      navigate("/order");
+    } catch (error) {
+      console.error("Order submission error:", error);
+      alert("Failed to place order. Please try again.");
+    }
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 flex items-center justify-center">
+        <div className="text-2xl text-gray-600">Loading checkout...</div>
+      </div>
+    );
+  }
+
+  // If cart is empty, show message
+  if (cartItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg text-center">
+          <p className="text-2xl text-gray-600 mb-4">Your cart is empty</p>
+          <button
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+            onClick={() => navigate("/shop")}
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 py-12">
@@ -178,51 +238,6 @@ const Checkout = () => {
             </h1>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal Details Section */}
-              <div>
-                <h2 className="text-xl font-semibold mb-4 text-gray-700">
-                  Personal Details
-                </h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    placeholder="First Name"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Last Name"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email Address"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
-                  />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="Phone Number"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    required
-                  />
-                </div>
-              </div>
-
               {/* Shipping Address Section */}
               <div>
                 <h2 className="text-xl font-semibold mb-4 text-gray-700">
@@ -247,15 +262,6 @@ const Checkout = () => {
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                   <div className="grid md:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      name="locality"
-                      value={formData.locality}
-                      onChange={handleInputChange}
-                      placeholder="Locality"
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                      required
-                    />
                     <input
                       type="text"
                       name="city"
@@ -298,30 +304,37 @@ const Checkout = () => {
                 <h2 className="text-xl font-semibold mb-4 text-gray-700">
                   Payment Method
                 </h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="online"
-                      checked={formData.paymentMethod === "online"}
-                      onChange={handleInputChange}
-                      className="form-radio text-green-500"
-                    />
-                    <span>Online Payment</span>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="cod"
-                      checked={formData.paymentMethod === "cod"}
-                      onChange={handleInputChange}
-                      className="form-radio text-green-500"
-                    />
-                    <span>Cash on Delivery</span>
-                  </label>
+                <div className="mb-4">
+                  <select
+                    name="paymentMethod"
+                    value={formData.paymentMethod}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="online">Online Payment</option>
+                  </select>
                 </div>
+
+                {/* Online Payment Section */}
+                {formData.paymentMethod === "online" && (
+                  <div>
+                    <img
+                      src="https://drive.google.com/thumbnail?id=1V7BQqmnGL4xA0C3MbWTDvtAbP3IlnNIH&sz=s4000"
+                      alt="QR Code"
+                      className="mx-auto mb-4 w-72 h-full object-cover"
+                    />
+                    <input
+                      type="text"
+                      name="transactionId"
+                      value={formData.transactionId}
+                      onChange={handleInputChange}
+                      placeholder="Transaction ID"
+                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      required
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Submit Button */}
@@ -340,10 +353,9 @@ const Checkout = () => {
             <h2 className="text-2xl font-bold mb-6 text-gray-800">
               Order Summary
             </h2>
-
             {/* Cart Items */}
             <div className="space-y-4 max-h-[400px] overflow-y-auto">
-              {HARDCODED_CART_ITEMS.map((item) => (
+              {cartItems.map((item) => (
                 <div
                   key={item.id}
                   className="flex items-center justify-between"
@@ -370,9 +382,18 @@ const Checkout = () => {
 
             {/* Total */}
             <div className="mt-6 pt-4 border-t">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Subtotal</span>
+                <span className="font-semibold">₹{total.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Shipping</span>
+                <span className="font-semibold">₹0</span>
+              </div>
+              <hr className="my-4 border-gray-200" />
               <div className="flex justify-between text-xl font-bold">
                 <span>Total</span>
-                <span>₹{HARDCODED_TOTAL.toLocaleString()}</span>
+                <span>₹{total.toLocaleString()}</span>
               </div>
             </div>
           </div>
