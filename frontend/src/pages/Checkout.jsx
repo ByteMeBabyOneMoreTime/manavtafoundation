@@ -142,12 +142,20 @@ const Checkout = () => {
     return true;
   };
 
-  const session_id = localStorage.getItem("session_id");
-  const user_id = localStorage.getItem("user_id");
-
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check for session_id before submitting
+    const session_id = localStorage.getItem("session_id");
+    const user_id = localStorage.getItem("user_id");
+
+    if (!session_id) {
+      // If no session_id, redirect to login
+      alert("Please login to continue with your order.");
+      navigate("/login");
+      return;
+    }
 
     if (!validateForm()) {
       return;
@@ -174,7 +182,6 @@ const Checkout = () => {
         }),
       ),
     };
-    console.log(orderDetails);
 
     try {
       const apiKey = import.meta.env.VITE_API_KEY;
@@ -188,7 +195,6 @@ const Checkout = () => {
           },
         },
       );
-      console.log(response);
 
       // Clear cart after successful order
       localStorage.removeItem("cart");
