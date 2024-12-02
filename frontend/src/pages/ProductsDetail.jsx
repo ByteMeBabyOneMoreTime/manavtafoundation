@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Heart, Share2, ChevronLeft, Star, Minus, Plus } from "lucide-react";
 
 const ProductDetail = () => {
+  const navigate = useNavigate();
   const { productId } = useParams(); // Get the product ID from URL params
   const [product, setProduct] = useState(null); // State to store product details
   const [mainImage, setMainImage] = useState("");
@@ -74,7 +75,7 @@ const ProductDetail = () => {
 
       // Save the updated cart back to localStorage
       localStorage.setItem("cart", JSON.stringify(cart));
-      // alert(`${product.name} has been added to your cart.`);
+      alert(`${product.name} has been added to your cart.`);
     } catch (error) {
       console.error("Error adding product to cart:", error);
       // alert("Failed to add product to the cart. Please try again.");
@@ -190,7 +191,13 @@ const ProductDetail = () => {
                 >
                   Add to Cart
                 </button>
-                <button className="flex-1 bg-green-100 text-green-700 py-3 rounded-lg hover:bg-green-200 transition-colors flex items-center justify-center">
+                <button
+                  onClick={() => {
+                    addToCart(product);
+                    navigate(`/checkout`);
+                  }}
+                  className="flex-1 bg-green-100 text-green-700 py-3 rounded-lg hover:bg-green-200 transition-colors flex items-center justify-center"
+                >
                   Buy Now
                 </button>
                 <button className="bg-gray-100 p-3 rounded-lg hover:bg-gray-200 transition-colors">

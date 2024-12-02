@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductsDetail";
 import Checkout from "./pages/Checkout";
 import OrderPlaced from "./pages/OrderPlaced";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
