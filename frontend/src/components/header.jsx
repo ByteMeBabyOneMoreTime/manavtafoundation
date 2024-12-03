@@ -113,7 +113,7 @@ const MainContent = ({ displayText }) => {
         {isLoggedIn ? (
           <>
             <Link
-              to="/"
+              to="/profile"
               className="py-1 px-3 md:py-2 md:px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-xs sm:text-sm md:text-base"
             >
               PROFILE
