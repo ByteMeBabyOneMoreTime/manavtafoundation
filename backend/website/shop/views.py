@@ -157,7 +157,7 @@ def manage_order(request):
 @validate_api_key
 @csrf_exempt
 def order_details(request, uid):
-    if request.method == "GET":
+    if request.method == "POST":
         try:
             user_id = uid
             if not user_id:
@@ -190,6 +190,7 @@ def order_details(request, uid):
                 items_data = []
                 for item in order_items:
                     items_data.append({
+                        'pid' : item.product.id,
                         'product_name': item.product.name,
                         'quantity': item.quantity,
                         'price': item.product.price,
