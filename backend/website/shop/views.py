@@ -190,6 +190,7 @@ def order_details(request, uid):
                 items_data = []
                 for item in order_items:
                     items_data.append({
+                        'pid' : item.product.id,
                         'product_name': item.product.name,
                         'quantity': item.quantity,
                         'price': item.product.price,
