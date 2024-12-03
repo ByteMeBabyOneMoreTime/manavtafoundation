@@ -157,7 +157,7 @@ def manage_order(request):
 @validate_api_key
 @csrf_exempt
 def order_details(request, uid):
-    if request.method == "GET":
+    if request.method == "POST":
         try:
             user_id = uid
             if not user_id:
