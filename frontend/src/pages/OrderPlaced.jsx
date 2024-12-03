@@ -18,14 +18,12 @@ const OrderPlaced = () => {
           throw new Error("User ID, API Key, or Session Key is missing");
         }
 
-        const response = await axios.get(
-          `https://manavtafoundation-sq6h.onrender.com/products/${userId}`,
+        const response = await axios.post(
+          `https://manavtafoundation-sq6h.onrender.com/products/order_details/${userId}`,
+          { session_key: sessionKey },
           {
             headers: {
               key: apiKey,
-            },
-            data: {
-              session_key: sessionKey,
             },
           },
         );
@@ -79,7 +77,6 @@ const OrderPlaced = () => {
           </div>
         </div>
 
-        {/* Order History Section 
         <div className="bg-white rounded-xl shadow-2xl p-8">
           <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
             Your Recent Orders
@@ -171,7 +168,6 @@ const OrderPlaced = () => {
             </div>
           )}
         </div>
-        */}
       </div>
     </div>
   );
