@@ -124,8 +124,8 @@ def validate_session_key(func):
     return wrapper
 
 
-@validate_api_key
-@validate_session_key
+# @validate_api_key
+# @validate_session_key
 @csrf_exempt
 def get_user_details(request):
     if request.method == "GET":
