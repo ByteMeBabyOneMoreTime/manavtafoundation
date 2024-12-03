@@ -1,116 +1,62 @@
-import { useState } from "react";
-import { Check } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Check, Leaf, Clock, MapPin, Package } from "lucide-react";
+import axios from "axios";
 
 const OrderPlaced = () => {
-  const [transactionId, setTransactionId] = useState("");
-  const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Hardcoded order details
-  const HARDCODED_ORDER_DETAILS = {
-    firstName: "Snehasish",
-    lastName: "Chatterjee",
-    email: "snehasish@example.com",
-    phone: "1234567890",
-    addressLine1: "123 Green Lane",
-    addressLine2: "Apartment 45B",
-    locality: "Parkside",
-    city: "Kolkata",
-    state: "West Bengal",
-    pinCode: "700001",
-    paymentMethod: "cod", // or "online"
-    items: [
-      {
-        id: 1,
-        name: "Birthday special money plant",
-        price: 79,
-        quantity: 2,
-        image: "https://iili.io/2cVik1S.th.png",
-      },
-      {
-        id: 2,
-        name: "5 Best Indoor Plants Pack (Pack of 5)",
-        price: 1159,
-        quantity: 1,
-        image: "https://iili.io/2cVQErB.th.png",
-      },
-    ],
-    totalAmount: 1317,
-  };
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const userId = localStorage.getItem("user_id");
+        const apiKey = import.meta.env.VITE_API_KEY;
+        const sessionKey = localStorage.getItem("session_id");
 
-  const [orderDetails] = useState(HARDCODED_ORDER_DETAILS);
+        if (!userId || !apiKey || !sessionKey) {
+          throw new Error("User ID, API Key, or Session Key is missing");
+        }
 
-  const PAYMENT_QR_CODE = "https://iili.io/HVT3Xx1.png";
+        const response = await axios.get(
+          `https://manavtafoundation-sq6h.onrender.com/products/${userId}`,
+          {
+            headers: {
+              key: apiKey,
+            },
+            data: {
+              session_key: sessionKey,
+            },
+          },
+        );
 
-  const handleTransactionSubmit = (e) => {
-    e.preventDefault();
-    if (transactionId.trim()) {
-      setIsOrderConfirmed(true);
-      // TODO: Send transaction verification to backend
-    }
-  };
+        setOrders(response.data.orders || []);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setIsLoading(false);
+      }
+    };
 
-  if (!orderDetails) return null;
+    fetchOrders();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100 py-12 px-4">
       <div className="container mx-auto max-w-4xl">
-        <div className="bg-white rounded-xl shadow-2xl p-8 space-y-6">
-          {orderDetails.paymentMethod === "online" ? (
-            <div className="text-center">
-              <h1 className="text-3xl font-bold mb-6 text-gray-800">
-                Complete Your Payment
-              </h1>
-
-              <div className="flex justify-center mb-6">
-                <img
-                  src={PAYMENT_QR_CODE}
-                  alt="Payment QR Code"
-                  className="max-w-xs rounded-lg shadow-md"
-                />
+        {/* Order Confirmation Section */}
+        <div className="bg-white rounded-xl shadow-2xl p-8 mb-8 space-y-6 text-center">
+          <div className="relative">
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="animate-plant-grow-1 absolute top-0 left-10 opacity-20">
+                <Leaf size={100} className="text-green-300" />
               </div>
-
-              <form
-                onSubmit={handleTransactionSubmit}
-                className="max-w-md mx-auto"
-              >
-                <input
-                  type="text"
-                  value={transactionId}
-                  onChange={(e) => setTransactionId(e.target.value)}
-                  placeholder="Enter Transaction ID"
-                  className="w-full px-4 py-2 border rounded-lg 
-                    focus:outline-none focus:ring-2 focus:ring-green-500"
-                  disabled={isOrderConfirmed}
-                />
-                <button
-                  type="submit"
-                  className="mt-4 w-full py-3 bg-green-500 text-white rounded-lg 
-                    hover:bg-green-600 transition font-semibold"
-                  disabled={isOrderConfirmed}
-                >
-                  Confirm Payment
-                </button>
-              </form>
-
-              {isOrderConfirmed && (
-                <div className="mt-6 text-center">
-                  <div className="flex justify-center mb-4">
-                    <div className="animate-bounce bg-green-500 rounded-full p-4">
-                      <Check
-                        size={48}
-                        color="white"
-                        className="animate-pulse"
-                      />
-                    </div>
-                  </div>
-                  <p className="text-2xl font-bold text-green-600">
-                    Order Confirmed!
-                  </p>
-                </div>
-              )}
+              <div className="animate-plant-grow-2 absolute top-10 right-10 opacity-20">
+                <Leaf size={120} className="text-green-300" />
+              </div>
             </div>
-          ) : (
-            <div className="text-center">
+
+            <div className="relative z-10">
               <div className="flex justify-center mb-6">
                 <div className="animate-bounce bg-green-500 rounded-full p-6">
                   <Check size={64} color="white" className="animate-pulse" />
@@ -121,64 +67,111 @@ const OrderPlaced = () => {
                 Order Placed Successfully!
               </h1>
               <p className="text-gray-600 mb-6">
-                Your order will be delivered with Cash on Delivery
+                We'll process your order soon
               </p>
             </div>
-          )}
+          </div>
 
-          <div className="bg-gray-50 rounded-lg p-6 mt-6">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              Order Details
-            </h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <p className="font-bold">Personal Information</p>
-                <p>
-                  {orderDetails.firstName} {orderDetails.lastName}
-                </p>
-                <p>{orderDetails.email}</p>
-                <p>{orderDetails.phone}</p>
-              </div>
-              <div>
-                <p className="font-bold">Shipping Address</p>
-                <p>{orderDetails.addressLine1}</p>
-                {orderDetails.addressLine2 && (
-                  <p>{orderDetails.addressLine2}</p>
-                )}
-                <p>
-                  {orderDetails.locality}, {orderDetails.city}
-                </p>
-                <p>
-                  {orderDetails.state} - {orderDetails.pinCode}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <p className="font-bold mb-2">Items</p>
-              {orderDetails.items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex justify-between border-b py-2"
-                >
-                  <div>
-                    <p>{item.name}</p>
-                    <p className="text-gray-500">
-                      ₹{item.price.toLocaleString()} x {item.quantity}
-                    </p>
-                  </div>
-                  <p className="font-bold">
-                    ₹{(item.price * item.quantity).toLocaleString()}
-                  </p>
-                </div>
-              ))}
-              <div className="flex justify-between mt-4 text-xl font-bold">
-                <span>Total</span>
-                <span>₹{orderDetails.totalAmount.toLocaleString()}</span>
-              </div>
-            </div>
+          <div className="mt-8 text-center text-gray-600">
+            <p className="text-sm">
+              Thank you for Shopping with Manavta Nursery
+            </p>
           </div>
         </div>
+
+        {/* Order History Section 
+        <div className="bg-white rounded-xl shadow-2xl p-8">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+            Your Recent Orders
+          </h2>
+
+          {isLoading ? (
+            <div className="text-center py-6">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-green-500 rounded-full border-t-transparent" />
+              <p className="mt-4 text-gray-600">Loading orders...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-600 py-6">
+              <p>Error: {error}</p>
+            </div>
+          ) : orders.length === 0 ? (
+            <div className="text-center text-gray-600 py-6">
+              <p>No recent orders found</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {orders.map((order) => (
+                <div
+                  key={order.order_id}
+                  className="border-b pb-6 last:border-b-0"
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center space-x-2">
+                      <Package size={20} className="text-green-500" />
+                      <span className="font-semibold">
+                        Order #{order.order_id}
+                      </span>
+                    </div>
+                    <span className="text-green-600 font-bold">
+                      {order.status}
+                    </span>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <MapPin size={16} className="text-gray-500" />
+                        <span className="font-semibold">Shipping Address</span>
+                      </div>
+                      <p>{order.address_line_1}</p>
+                      {order.address_line_2 && <p>{order.address_line_2}</p>}
+                      <p>
+                        {order.city}, {order.state}
+                      </p>
+                      <p>Pincode: {order.pincode}</p>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Clock size={16} className="text-gray-500" />
+                        <span className="font-semibold">Order Details</span>
+                      </div>
+                      <p>Payment Method: {order.payment_method}</p>
+                      <p>
+                        Total Amount: ₹{order.payment_amount.toLocaleString()}
+                      </p>
+                      <p>
+                        Ordered on:{" "}
+                        {new Date(order.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <p className="font-semibold mb-2">Items</p>
+                    {order.items.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between py-2 border-t"
+                      >
+                        <div>
+                          <p>{item.product_name}</p>
+                          <p className="text-gray-500">
+                            ₹{item.price.toLocaleString()} x {item.quantity}
+                          </p>
+                        </div>
+                        <p className="font-bold">
+                          ₹{item.total_price.toLocaleString()}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        */}
       </div>
     </div>
   );

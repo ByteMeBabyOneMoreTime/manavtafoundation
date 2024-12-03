@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductsDetail";
 import Checkout from "./pages/Checkout";
 import OrderPlaced from "./pages/OrderPlaced";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -34,10 +35,10 @@ function App() {
           <Route path="/news" element={<News />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:categoryId" element={<Shop />} />
-          {/*<Route path="/shop/:categoryId/:productId" element={<Cart />} /> */}
           <Route path="/product/:productId" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NoPage />} />
           <Route path="/order" element={<OrderPlaced />} />
         </Routes>

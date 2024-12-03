@@ -13,6 +13,7 @@ const Shop = () => {
   const [productsPerPage] = useState(6);
   const [wishlist, setWishlist] = useState([]);
   const [currentCategoryName, setCurrentCategoryName] = useState("All Items");
+  const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
   const { categoryId } = useParams();
@@ -111,6 +112,7 @@ const Shop = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`Added ${product.name} to cart.`);
     console.log(`Added ${product.name} to cart.`);
   };
 
@@ -134,6 +136,15 @@ const Shop = () => {
           </h1>
         </div>
       </div>
+      {message && (
+        <div
+          className={`absolute top-4 right-4 p-4 rounded-md text-white ${
+            message.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
 
       <div className="container mx-auto px-4 py-8">
         {/* Dynamic Category Heading */}

@@ -46,7 +46,9 @@ const Login = () => {
 
       // Fix: Access the message field from response.data
       const session_id = response.data.message;
+      const user_id = response.data.uid;
       localStorage.setItem("session_id", session_id);
+      localStorage.setItem("user_id", user_id);
       alert("Login successful!");
       // Redirect or perform further actions after successful login
 

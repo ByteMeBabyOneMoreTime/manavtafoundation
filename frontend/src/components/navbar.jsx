@@ -79,9 +79,7 @@ const Navbar = () => {
             🛒
           </button>
         </Link>
-        <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">
-          ❤️
-        </button>
+        <button className="bg-green-700 text-white text-lg font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-300"></button>
       </div>
 
       {/* Hamburger Icon for Mobile */}
