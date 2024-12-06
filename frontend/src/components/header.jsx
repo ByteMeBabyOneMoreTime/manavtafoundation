@@ -98,12 +98,12 @@ const MainContent = ({ displayText }) => {
         </h1>
 
         {/* Mobile Tagline - Shown only on mobile */}
-        <div className="sm:hidden text-red-600 font-medium text-sm mt-2">
+        <div className="sm:hidden text-red-600 font-extrabold text-sm mt-2">
           {displayText} <span className="animate-pulse">|</span>
         </div>
 
         {/* Desktop Tagline - Hidden on mobile */}
-        <p className="hidden sm:block text-lg md:text-xl text-red-600 mt-1 min-h-[30px]">
+        <p className="hidden sm:block text-lg md:text-xl text-red-600 font-extrabold mt-1 min-h-[30px]">
           {displayText} <span className="animate-pulse">|</span>
         </p>
       </div>
@@ -152,6 +152,7 @@ const MainHeader = () => {
     "मिशन घर घर हरियाली से गरीब के घर खुशहाली",
     "हर पौधा, एक नई आशा",
     "पर्यावरण संरक्षण हमारा कर्तव्य",
+    "चैरिटी की नर्सरी मानवता नर्सरी",
   ];
   const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0);
 

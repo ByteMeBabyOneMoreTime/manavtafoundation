@@ -38,6 +38,76 @@ export default function Services() {
       stats: "900 blood donations facilitated",
       videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
     },
+    {
+      title: "Ayogya Yojna",
+      description:
+        "To provide cashless quality medical care to beneficiaries under the scheme for catastrophic illnesses requiring hospitalization for surgeries and therapies under identified specialty services through a network of health care providers..WE Provide 51005+ mask .AROGYA scheme has been launched to cover the bottom 70% of poor and economically weaker sections of the country. The Arogya Yojana Eligibility is designed with pre-conditions so that only the underprivileged people of the society benefit from the initiative..",
+      stats: "900 blood donations facilitated",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Clean India Mission Yojna",
+      description:
+        "Eliminate open defecation: The campaign aims to make India open-defecation free by constructing toilets and promoting the use of sanitation facilities. The campaign focuses on changing people's behavior towards open defecation and promoting the use of toilets. Improve solid waste management: The campaign aims to promote proper disposal of waste and ensure cleanliness in public places. The campaign emphasizes the importance of segregating waste at source and promoting the use of recycling and composting. Promote hygiene and cleanliness: The campaign aims to promote good hygiene practices, including handwashing, and cleanliness in public places. The campaign also aims to create awareness about the ill effects of littering and spitting The emerging India foundation help to clean the 100+ ditches of society , as well as rural areas .",
+      stats: "Cleaned 100+ ditches of society",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Siksha Sankalp Yojna",
+      description:
+        "The SANKALP Scheme has recently been urged by the Ministry of Skill Development and Entrepreneurship to concentrate on the ecosystem of district-level skilling through convergence and coordination. The Skills Acquisition and Knowledge Awareness for Livelihood Promotion (SANKALP) initiative launched to enhance institutional mechanisms for skill development and expand youth access to high-quality, market-relevant traininglong- and short-term skill development training programmes’ quality and market relevance are to be improved (Vocational and Educational Training) according to SANKALP Scheme guidelines..",
+      stats: "Knowledge and Skill Development",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Employement Generation Yojna",
+      description:
+        "To provide cashless quality medical care to beneficiaries under the scheme for catastrophic illnesses requiring hospitalization for surgeries and therapies under identified specialty services through a network of health care providers..WE Provide 51005+ mask .AROGYA scheme has been launched to cover the bottom 70% of poor and economically weaker sections of the country. The Arogya Yojana Eligibility is designed with pre-conditions so that only the underprivileged people of the society benefit from the initiative..",
+      stats:
+        "Provide 51005+ mask in AROGYA to cover the bottom 70% of poor and economically weaker sections of the country. ",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Save Water Yojna",
+      description:
+        "Save water yojana initiative that was started to solve the problem of less groundwater in India. The goal of the scheme is to manage groundwater better in areas where there is a shortage of water. The plan wants people in the community to work together and make decisions. It wants people to use water wisely, fill up the groundwater again, and save water. This scheme wants to make sure there is enough clean water for drinking and farming. The plan focuses on including local people, especially farmers, in taking care of groundwater. The government hopes that this plan will help save water and make sure we have enough for the future. So we constructed 145 damaged pipelines ...and raptured pipes though which water is supplied in homes the sustainable management of groundwater with community involvement. It envisages public involvement through the establishment of ‘Water User Associations’, water budgeting, formulation and realization of wise water security designs, etc...",
+      stats: "900 blood donations facilitated",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Medical Help Yojna",
+      description:
+        "To provide cashless quality medical care to beneficiaries under the scheme for catastrophic illnesses requiring hospitalization for surgeries and therapies under identified specialty services through a network of health care providers..WE Provide 71005+ people free treatment for any disease .AROGYA scheme has been launched to cover the bottom 70% of poor and economically weaker sections of the country. The Arogya Yojana Eligibility is designed with pre-conditions so that only the underprivileged people of the society benefit from the initiative..",
+      stats: "Provide 71005+ people free treatment.",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Road safety Yojna",
+      description:
+        "Meaning of road safety Road safety teaches people how to conduct themselves while driving or crossing roads. Road safety measures, including the use of road barriers and highway barriers, are aimed at reducing the risks of people getting involved in accidents in the first place. Following these measures, the chances of accidents, injuries and damage to property are vastly reduced. Importance of road safety There is a constant uptick in the number of vehicles on the road. If you feel that the traffic conditions are bad right now, they will only worsen in the upcoming years unless people follow road safety measures and traffic awareness to make life easier for everyone. There are a few factors that lead to such accidents in the country. Some of them are unsafe driving, disregard for traffic rules and regulations, users refraining from using helmets and seat belts and so on. The government of India follows road safety week between the 11th to 17th of January. Road safety awareness week aims at improving road safety awareness across the country with the help of a few methods, including pedestrian safety, road safety signage, and road and safety. Key objectives of road safety week It is essential to drive at slower speeds. Research shows that for an increase of 1% in speed, the chances of accidents increase by 4%. One must altogether avoid the usage of phones or other gadgets for any sort of activities that can be distracting. It is hazardous as it reduces the reaction time, making it difficult to react to changes. Using a good helmet while riding a bike is critical, irrespective of whether you are riding or being a pillion rider. The presence of a helmet can reduce the risk of severe accidents and death by a considerable margin....",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Marriage Help Yojna",
+      description:
+        "The scheme has been launched at the initiative and The objective is to provide financial help to poor, needy, destitute families for marrying off their daughters/widows/divorcees. Under the scheme, assistance of Rs. 15,000 is given for house hold items and the mass marriage expenditure. This assistance is given in mass marriages with the condition that the girl must have attained the age of 18 years. Beneficiary: This assistance is given in mass marriages with the condition that the girl must have attained the age of 18 years.",
+      stats: "Rs 15,000 Given for House hold Items",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Judicial Help",
+      description:
+        "Legal Services includes providing Free Legal Aid to those weaker sections Free legal aid is the provision of free legal services in civil and criminal matters for those poor and marginalized people who cannot afford the services of a lawyer for the conduct of a case or a legal proceeding in any Court the emerging India foundation help in solving 150+cases of judicial....",
+      stats: "Helped in solving 150+ Cases",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
+    {
+      title: "Cancer Awarenes",
+      description:
+        "Cancer is a disease* which occurs when changes in a group of normal cells within the body lead to uncontrolled, abnormal growth forming a lump called a tumour; this is true of all cancers except leukaemia (cancer of the blood). If left untreated, tumours can grow and spread into the surrounding normal tissue, or to other parts of the body via the bloodstream and lymphatic systems, and can affect the digestive, nervous and circulatory systems or release hormones that may affect body function. At certain times of the year, we mark awareness days, weeks or months to help spread the word about how to help prevent different kinds of cancers, and how to spot them early. The emerging India helps to aware the people about this . Below are some of the cancer awareness periods we regularly cover, with links to helpful resources on each cancer....",
+      stats: "Helped in solving 150+ Cases",
+      videoUrl: "https://www.youtube.com/embed/kIRb60r3cH8?si=Svl_FiLy8Y1tSCos",
+    },
   ];
 
   return (
