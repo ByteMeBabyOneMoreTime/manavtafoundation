@@ -13,9 +13,30 @@ const AboutSection = () => {
             </p>
             <p className="text-gray-700 mb-6">
               Aligned to the Sustainable Development Goals, The Emerging India
-              Foundation runs Manavta nursery which comes under this foundation.
-              This nursery was started on 1 July 2022 by Dr. Himanshu Kumar with
-              the aim of raising funds for The Emerging India Foundation...
+              Foundation runs Manavta nursery which comes under this foundation
+              this nursery is started on 1 July 2022 by Dr. Himsnshu kumar and
+              the aim of this nursery is raising fund for The emerging India
+              foundation what's the outcome comes from this nursery we put in a
+              poor or it iscommitted to improving the lives of marginalized
+              communities, by leveraging the power of youth and strengthening
+              Government systems.
+            </p>
+
+            <p className="text-gray-700 mb-6">
+              By focusing on the most marginalized groups within India,
+              strengthening the ability of states to deploy impactful
+              initiatives, and engaging youth in nation building efforts,It’s
+              where people gather to assess your organization’s credibility and
+              trustworthinessIt’s where people gather to assess your
+              organization’s credibility and trustworthinessmore prospective
+              future for all the classes of people irrespective of their caste,
+              creed and religion. From the raise fund through manavta nursery we
+              distribute rashan kit among 16070 people, 7780 clothes distrubute
+              2245+ plantation /21159 plant distribution , 51005+ mask
+              distribution, 55 adahar card correction, 7650 free medication ,
+              and come under this foundation and the nursery which is running
+              under The emerging India foundation to raise fund from which we
+              can help the people who are literally poor....
             </p>
             <h3 className="text-2xl font-semibold text-green-700 mb-4">
               What we do with the earning money of NGO
