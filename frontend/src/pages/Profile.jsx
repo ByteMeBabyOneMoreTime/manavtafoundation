@@ -17,7 +17,7 @@ const Profile = () => {
   const [error, setError] = useState(null);
 
   const API_BASE_URL = "https://manavtafoundation-sq6h.onrender.com";
-  const SESSION_KEY = "9a6dd717-7bcb-419e-9341-680d2fc2aca0";
+  const SESSION_KEY = localStorage.getItem("session_id");
   const API_KEY = import.meta.env.VITE_API_KEY;
 
   const formatDate = (dateString) => {
