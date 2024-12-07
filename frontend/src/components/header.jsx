@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const SocialLinks = () => (
   <div className="hidden sm:flex space-x-4">
     <a
-      href="https://www.facebook.com/yourprofile"
+      href="https://www.facebook.com/TEIFoundation?mibextid=ZbWKwL"
       target="_blank"
       rel="noopener noreferrer"
       className="text-gray-800 hover:text-blue-600"
@@ -13,7 +13,7 @@ const SocialLinks = () => (
       <Facebook className="w-6 h-6" />
     </a>
     <a
-      href="https://twitter.com/yourprofile"
+      href="https://x.com/Himansh46056633"
       target="_blank"
       rel="noopener noreferrer"
       className="text-gray-800 hover:text-blue-400"
@@ -21,7 +21,7 @@ const SocialLinks = () => (
       <Twitter className="w-6 h-6" />
     </a>
     <a
-      href="https://www.instagram.com/yourprofile"
+      href="https://www.instagram.com/teif_9918"
       target="_blank"
       rel="noopener noreferrer"
       className="text-gray-800 hover:text-pink-600"
