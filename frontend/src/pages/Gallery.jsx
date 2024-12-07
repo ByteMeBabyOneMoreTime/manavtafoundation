@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { Home, ZoomIn, X } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { Home, ZoomIn, X, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, Suspense } from "react";
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   // Fixed image array with correct paths
   const images = [
@@ -21,7 +22,7 @@ export default function Gallery() {
     { id: 10, src: "pf-img/pic10.jpg", alt: "Gallery Image 10" },
     { id: 11, src: "pf-img/pic11.jpg", alt: "Gallery Image 11" },
     { id: 12, src: "pf-img/pic12.jpg", alt: "Gallery Image 12" },
-    { id: 13, src: "pf-img/picc13.jpg", alt: "Gallery Image 13" }, // Note the extra 'c' in picc13
+    { id: 13, src: "pf-img/pic14.jpg", alt: "Gallery Image 13" },
     { id: 16, src: "pf-img/pic16.jpg", alt: "Gallery Image 16" },
     { id: 17, src: "pf-img/pic17.jpg", alt: "Gallery Image 17" },
     { id: 18, src: "pf-img/pic18.jpg", alt: "Gallery Image 18" },
@@ -58,8 +59,24 @@ export default function Gallery() {
     },
   };
 
+  // Loading Spinner Component
+  const LoadingSpinner = () => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      >
+        <Loader2 className="w-16 h-16 text-white animate-spin" />
+      </motion.div>
+    </div>
+  );
+
   return (
-    <>
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative h-64 md:h-80 overflow-hidden">
         <div
@@ -70,18 +87,27 @@ export default function Gallery() {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
-        <div className="relative h-full flex flex-col items-center justify-center text-white">
+        <div className="relative h-full flex flex-col items-center justify-center text-white space-y-4 px-4 text-center">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-4xl md:text-5xl font-bold"
           >
-            Our Gallery
+            Explore Our Gallery
           </motion.h1>
-          <motion.div
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
+            className="max-w-xl text-gray-200 text-sm md:text-base"
+          >
+            Discover a curated collection of stunning images that tell our
+            unique story.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
             className="flex items-center space-x-2 text-sm md:text-base"
           >
             <NavLink
@@ -97,7 +123,7 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* Gallery Grid */}
+      {/* Gallery Grid with Dynamic Sizing */}
       <div className="container mx-auto px-4 py-16">
         <motion.div
           variants={containerVariants}
@@ -109,16 +135,20 @@ export default function Gallery() {
             <motion.div
               key={image.id}
               variants={itemVariants}
-              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              whileHover={{ scale: 1.02 }}
+              className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
             >
-              <div className="aspect-w-4 aspect-h-3">
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  loading="lazy"
-                />
+              <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    onLoad={() => setIsImageLoading(false)}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                </Suspense>
+                {isImageLoading && <LoadingSpinner />}
               </div>
               <div
                 className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 
@@ -126,7 +156,7 @@ export default function Gallery() {
               >
                 <button
                   onClick={() => setSelectedImage(image)}
-                  className="p-3 bg-white rounded-full transform translate-y-4 group-hover:translate-y-0 
+                  className="p-3 bg-white text-gray-800 rounded-full transform translate-y-4 group-hover:translate-y-0 
                     transition-all duration-300 hover:bg-blue-500 hover:text-white"
                 >
                   <ZoomIn className="w-6 h-6" />
@@ -137,35 +167,38 @@ export default function Gallery() {
         </motion.div>
       </div>
 
-      {/* Lightbox */}
-      {selectedImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div
-            className="relative max-w-4xl w-full"
-            onClick={(e) => e.stopPropagation()}
+      {/* Lightbox with AnimatePresence for smooth transitions */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
           >
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 text-white hover:text-blue-400 transition-colors"
+            <div
+              className="relative max-w-5xl w-full"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-8 h-8" />
-            </button>
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="w-full h-auto rounded-lg shadow-2xl"
-            />
-          </div>
-        </motion.div>
-      )}
-    </>
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-12 right-0 text-white hover:text-blue-400 transition-colors group"
+              >
+                <X className="w-8 h-8 group-hover:rotate-90 transition-transform" />
+              </button>
+              <motion.img
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="w-full h-auto rounded-lg shadow-2xl object-contain max-h-[90vh]"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
