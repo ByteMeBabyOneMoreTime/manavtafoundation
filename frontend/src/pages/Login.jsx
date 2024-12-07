@@ -139,6 +139,7 @@ const Login = () => {
               Register
             </a>
           </p>
+          {/*
           <p>
             Forgot Password?{" "}
             <a
@@ -148,6 +149,7 @@ const Login = () => {
               Reset Password
             </a>
           </p>
+ */}
         </div>
       </div>
     </div>
